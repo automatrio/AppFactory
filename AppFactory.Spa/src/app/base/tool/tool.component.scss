@@ -1,0 +1,49 @@
+:host {
+    color: var(--color);
+}
+
+.tool-container {
+    width: calc(100% - 20px);
+}
+
+.outer-glow-container {
+    border-radius: 6px;
+    box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 0.2);
+    transition: 150ms;
+}
+
+.inner-glow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    word-wrap: break-word;
+    height: 100%;
+    width: 100%;
+    border-radius: 6px;
+    padding: 20px 0px 20px 0px;
+    box-shadow: 0px 0px 4px 1px rgba(255, 255, 255, 0.4) inset;
+    background-color: rgba(17, 17, 17, 0.5);
+    transition: 150ms;
+}
+
+.shadow {
+    border-radius: 6px;
+    box-shadow: 4px 6px 4px 1px rgba(0,0,0,.7);
+    margin-bottom: 20px;
+    transition: 150ms;
+}
+
+.tool-container:hover {
+    cursor: pointer;
+
+    .outer-glow-container {
+        box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.7);
+    }
+    .inner-glow-container {
+        box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.7) inset;
+    }
+    .shadow {
+        box-shadow: 6px 8px 6px 1px rgba(0,0,0,.7);
+    }
+}
