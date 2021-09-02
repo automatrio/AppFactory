@@ -5,6 +5,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonSharedModule } from './common/common-shared.module';
+import { GeneralModule } from './general/general.module';
+import { AngularMaterialModule } from './common/angular-material.module';
+import { CoreModule } from './core/core.module';
+import { MainModule } from './main/main.module';
 
 @NgModule({
   declarations: [
@@ -12,9 +16,12 @@ import { CommonSharedModule } from './common/common-shared.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    CommonSharedModule
+    CommonSharedModule,
+    GeneralModule,
+    MainModule,
+    CoreModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

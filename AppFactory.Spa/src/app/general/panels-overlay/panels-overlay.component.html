@@ -1,0 +1,24 @@
+<mat-drawer-container class="grid-container">
+
+    <mat-drawer-content>
+
+
+        <app-navbar></app-navbar>
+        
+        <div class="work-area">
+            <router-outlet></router-outlet>  
+            <app-node-viewport></app-node-viewport>      
+        </div>
+    
+    </mat-drawer-content>
+
+    <mat-drawer mode="side" opened position="end" [scrollLeft]="false">
+        
+        <div class="right-panel-grid-container">
+            <app-options-menu></app-options-menu>
+            <app-explorer></app-explorer>
+        </div>
+        
+    </mat-drawer>
+
+</mat-drawer-container>

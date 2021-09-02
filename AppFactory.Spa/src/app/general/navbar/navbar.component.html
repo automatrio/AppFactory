@@ -1,0 +1,9 @@
+<section class="navbar">
+    <nav mat-tab-nav-bar backgroundColor="primary" >
+        <a mat-tab-link *ngFor="let section of sections" (click)="navigate(section.route)">
+            <b><u>{{section.name[0]}}</u></b>{{section.name.substr(1,section.name.length)}}         
+        </a>
+        <a mat-tab-link disabled>Disabled Link</a>
+    </nav>
+</section>
+  
