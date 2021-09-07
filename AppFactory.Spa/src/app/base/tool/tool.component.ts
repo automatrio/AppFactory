@@ -1,16 +1,18 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostBinding, Input, OnInit } from '@angular/core';
 import { Command } from '../command';
 
 @Component({
   selector: 'tool',
   templateUrl: './tool.component.html',
-  styleUrls: ['./tool.component.scss']
+  styleUrls: ['../styles/bloom-box.scss', '../styles/bloom-box-interactable.scss']
 })
 export class Tool implements OnInit {
 
   @Input() title: string;
   @Input() command: Command;
-  @Input() color: string;
+  
+  @HostBinding("style.--color")
+    @Input() color: string;
 
   constructor() { }
 
@@ -19,15 +21,6 @@ export class Tool implements OnInit {
 
   executeCommand() {
     this.command.execute();
-  }
-
-  highlight(event: Event) {
-    const element = event.currentTarget as HTMLElement;
-    element.animate([{
-      boxShadow: ""
-    },{
-
-    }])
   }
 
 }

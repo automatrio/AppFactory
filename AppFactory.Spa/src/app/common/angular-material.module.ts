@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -15,14 +16,16 @@ import { OverlayModule } from '@angular/cdk/overlay';
     MatButtonModule,
     MatSidenavModule,
     MatInputModule,
-    OverlayModule
+    OverlayModule,
+    DragDropModule
   ],
   exports: [
     MatTabsModule,
     MatButtonModule,
     MatSidenavModule,
     MatInputModule,
-    OverlayModule
+    OverlayModule,
+    DragDropModule
   ]
 })
 export class AngularMaterialModule { }

@@ -1,26 +1,11 @@
 /* You can add global styles to this file, and also import other style files */
 
 :root {
-    --main-light-blue: #85baff;
-    --main-blue: #4e90e6;
-    --main-dark-blue: #4883d0;
-    --main-darker-blue: #2c4f7d;
-    --main-darkest-blue: #1a2f4a;
-
-    --main-blue-alpha50: #569fff84;
-    --main-dark-blue-alpha50: #4883d087;
-    --main-darker-blue-alpha50: #2c4f7d80;
-    --main-darkest-blue-alpha50: #1a2f4a7d;
-
-    --main-blue-alpha80: #569fffd2;
-    --main-dark-blue-alpha80: #4883d0c7;
-    --main-darker-blue-alpha80: #2c4f7dbf;
-    --main-darkest-blue-alpha80: #1a2f4ac1;
-
-    --main-blue-alpha20: #569fff21;
-    --main-dark-blue-alpha20: #4883d02f;
-    --main-darker-blue-alpha20: #2c4f7d32;
-    --main-darkest-blue-alpha20: #1a2f4a2a;
+    --main-light-blue: 133, 186, 255;
+    --main-blue: 78, 144, 230;
+    --main-dark-blue: 72, 131, 208;
+    --main-darker-blue: 44, 79, 125;
+    --main-darkest-blue: 26, 47, 74;
 
     --default-bezier: "cubic-bezier(.01,.83,.65,1.07)";
 
@@ -60,4 +45,29 @@ body {
     height: 40px !important;
     box-shadow: 0px 0px 3px 1px rgba(255, 255, 255, 0.15) inset !important;
     text-shadow: 0px 0px 2px white;
+}
+
+::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: rgba(0,0,0,.1);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(var(--main-blue), .5);
+    transition: 150ms;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(var(--main-blue));
+}
+
+::-webkit-scrollbar-corner {
+    background: none;
 }

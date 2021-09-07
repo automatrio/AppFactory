@@ -1,8 +1,10 @@
-<div class="tool-container" (mouseover)="highlight($event)">
+<div class="box-container" style="width: calc(100% - 20px);">
     <div class="shadow">
         <div class="outer-glow-container" (click)="executeCommand()">
             <div class="inner-glow-container">
-                {{title}}
+                <div class="text-container">
+                    {{title}}
+                </div>
             </div>
         </div>
     </div>

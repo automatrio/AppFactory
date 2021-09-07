@@ -1,0 +1,19 @@
+.box-container {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px;
+    background-color: rgba(var(--color), .8);
+    z-index: 5;
+}
+
+.outer-glow-container {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px;
+}
+
+.inner-glow-container {
+    height: 20px !important;
+    width: 20px !important;
+    border-radius: 10px;
+}

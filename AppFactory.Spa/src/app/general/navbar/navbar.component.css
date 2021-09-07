@@ -3,7 +3,7 @@
 }
 
 nav {
-    border-bottom: 2px solid var(--main-blue) !important;
+    border-bottom: 2px solid rgb(var(--main-blue)) !important;
     box-shadow: 0px 0px 2px 2px #4193ff80 !important;
     opacity: .8;
 }

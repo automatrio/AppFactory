@@ -1,0 +1,10 @@
+:host {
+    top: var(--top);
+    bottom: var(--bottom);
+}
+
+.spaghetti {
+    position: absolute;
+    top: var(--top);
+    left: var(--left);
+}

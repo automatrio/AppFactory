@@ -1,0 +1,24 @@
+.box-container {
+    width: fit-content;
+    height: fit-content
+}
+
+.node-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px 0px 20px;
+}
+
+.handle {
+    height: 20px;
+    width: 20px;
+    margin-left: 20px;
+}
+
+node-property {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

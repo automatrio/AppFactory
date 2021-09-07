@@ -1,0 +1,20 @@
+.property-container {
+    width: calc(100% + 30px);
+    display: grid;
+    grid-template-columns: 30px 1fr 30px;
+    margin-bottom: 15px;
+    justify-items: center;
+    align-items: center;
+}
+
+input {
+    grid-column: 2 / 3;
+}
+
+.input-slot {
+    grid-column: 1 / 2;
+}
+
+.output-slot {
+    grid-column: 3 / 4;
+}
