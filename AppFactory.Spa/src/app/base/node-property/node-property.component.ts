@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
-import { Property } from '../../common/interfaces/property';
+import { Property } from '../../common/models/property';
 import { NodeViewportComponent } from '../node-viewport/node-viewport.component';
 import { SlotComponent } from '../slot/slot.component';
 
@@ -8,10 +8,12 @@ import { SlotComponent } from '../slot/slot.component';
   templateUrl: './node-property.component.html',
   styleUrls: ['./node-property.component.css']
 })
-export class NodeProperty implements AfterViewInit {
+export class NodeProperty<T> implements AfterViewInit {
 
-  property: Property;
-  public slot: SlotComponent;
+  name: string;
+  value: T;
+
+  slot: SlotComponent;
 
   @HostBinding("style.--color")
     @Input() color: string;
@@ -20,14 +22,11 @@ export class NodeProperty implements AfterViewInit {
   @ViewChild('outputSlot', {static: false}) private _outputSlot?: any;
 
   @Input() type: "input" | "output" = "output";
-  private _viewportRef: NodeViewportComponent;
+  @Input() viewportRef: NodeViewportComponent;
 
-  @Output() slotClicked = new EventEmitter<{prop: NodeProperty, slot: SlotComponent}>();
+  @Output() slotClicked = new EventEmitter<{prop: NodeProperty<T>, slot: SlotComponent}>();
 
-  constructor(
-    viewportRef: NodeViewportComponent) {
-    this._viewportRef = viewportRef;
-  }
+  constructor() {}
 
   ngAfterViewInit(): void {
     this.getSlot();

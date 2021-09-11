@@ -1,7 +1,10 @@
-import { Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, ViewChild } from "@angular/core";
+import { Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, Type, ViewChild } from "@angular/core";
 import { HostDirective } from "src/app/common/directives/host.directive";
+import { CommandService } from "src/app/core/services/command.service";
 import { Colors } from "src/app/global/colors";
+import { DatabaseService } from "src/app/main/database/service/database.service";
 import { NodeProperty } from "../node-property/node-property.component";
+import { NodeComponent } from "../node/node.component";
 import { SpaghettiComponent } from "../spaghetti/spaghetti.component";
 import { SpaghettiService } from "../spaghetti/spaghetti.service";
 
@@ -30,28 +33,34 @@ export class NodeViewportComponent implements OnInit {
   @HostBinding('style.--viewport-height')
     viewportHeight: string = this.dimensions.height + 'px'; 
     
-  @ViewChild(HostDirective, {static: true}) spaghettiHost!: HostDirective;
+  @ViewChild('spaghettiHost', {static: true}) spaghettiHost!: HostDirective;
+  @ViewChild('nodeHost', {static: true}) nodeHost!: HostDirective;
   @ViewChild('container', {static: true}) container!: ElementRef<HTMLElement>;
 
   constructor(
     private spaghettiService: SpaghettiService,
+    private databaseService: DatabaseService,
     private resolver: ComponentFactoryResolver) {
     this.colors = new Colors();
     this.spaghettiService.viewportRef = this;
   }
 
   ngOnInit(): void {
-    this.subscribeToSpaghettiInstantiation();
+    this.subscribeToInstantiations();
     this.initializeAllSpaghettis();
     this.getBoundingRect();
   }
 
   ////////// PRIVATE METHODS //////////
 
-  private subscribeToSpaghettiInstantiation() {
+  private subscribeToInstantiations() {
     this.spaghettiService.instantiationQueued$.subscribe(() => {
       this.spaghettiService.ongoingSpaghetti = this.instantiateSpaghetti();
     });
+
+    this.databaseService.instantiationQueued$.subscribe(component => {
+      this.instantiateNode(component);
+    })
   }
 
   private initializeAllSpaghettis() {
@@ -59,11 +68,23 @@ export class NodeViewportComponent implements OnInit {
   }
 
   private instantiateSpaghetti() {
-    const factory = this.resolver.resolveComponentFactory(SpaghettiComponent);
-    const vcRef = this.spaghettiHost.viewContainerRef;
-    const componentRef = vcRef.createComponent<SpaghettiComponent>(factory);
-
+    const componentRef = this.instantiate(SpaghettiComponent);
     componentRef.instance.binding$ = this.spaghettiService.currentData$; 
+
+    return componentRef;
+  }
+
+  private instantiateNode(component: Type<unknown>) {
+    const componentRef = this.instantiate(component);
+
+    return componentRef;
+  }
+
+  private instantiate<T>(component: Type<T>) {
+    const type = <T> <unknown> undefined;
+    const factory = this.resolver.resolveComponentFactory(component);
+    const vcRef = this.spaghettiHost.viewContainerRef;
+    const componentRef = vcRef.createComponent<T>(factory); 
 
     return componentRef;
   }
@@ -75,12 +96,4 @@ export class NodeViewportComponent implements OnInit {
       top: Math.round(rect.y) - 5
     };
   }
-
-  ///////// TEMPORARY //////////
-
-  tempProperties: NodeProperty[] = [
-    new NodeProperty(this),
-    new NodeProperty(this)
-  ]
-
 }

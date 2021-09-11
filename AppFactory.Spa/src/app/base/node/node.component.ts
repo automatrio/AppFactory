@@ -1,9 +1,10 @@
-import { Component, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { HostDirective } from 'src/app/common/directives/host.directive';
 import { NodeViewportComponent } from 'src/app/base/node-viewport/node-viewport.component';
 import { NodeProperty } from '../node-property/node-property.component';
 import { SlotComponent } from '../slot/slot.component';
 import { SpaghettiService } from '../spaghetti/spaghetti.service';
+import { Property } from 'src/app/common/models/property';
 
 @Component({
   selector: 'node',
@@ -15,21 +16,25 @@ import { SpaghettiService } from '../spaghetti/spaghetti.service';
 })
 export class NodeComponent implements OnInit {
 
-  @Input() title: string = "Title";
-  @Input() viewportRef: NodeViewportComponent;
-  @Input() properties: NodeProperty[];
+  protected _iconUrl: string;
+  protected _title: string = "Title";
+  protected _viewportRef: NodeViewportComponent;
+  protected _properties: Property<any>[];
 
   @HostBinding("style.--color")
-    @Input() color: string;
+    protected _color: string;
 
-  @ViewChild(HostDirective, {static: false}) propertiesHost: HostDirective;
+  @ViewChild(HostDirective, {static: false}) private _propertiesHost: HostDirective;
 
-  constructor(private spaghettiService: SpaghettiService) { }
+  constructor(
+    private resolver: ComponentFactoryResolver,
+    private spaghettiService: SpaghettiService) { }
 
-  ngOnInit(/*inject componentresolverfCTORY*/): void {
+  ngOnInit(): void {
+    this.createProperties();
   }
 
-  public onSlotClicked(event: {prop: NodeProperty, slot: SlotComponent}) {
+  public onSlotClicked(event: {prop: NodeProperty<any>, slot: SlotComponent}) {
     this.spaghettiService.createSpaghetti({
       node: this,
       prop: event.prop,
@@ -38,11 +43,24 @@ export class NodeComponent implements OnInit {
   }
 
   public onDragMoved(event: any){
-    console.log(this.properties);
-    this.properties.forEach(prop => {
+    console.log(this._properties);
+    this._properties.forEach(prop => {
       console.log("prop", prop);
     });
   }
 
+  public get title() { return this._title }
+
+  ////////// PRIVATE METHODS ///////////
+
+  private createProperties() {
+    this._properties.forEach(prop => {
+      const type = prop.getType();
+      console.log("type of prop", type);
+      // const factory = this.resolver.resolveComponentFactory(NodeProperty<>);
+      // const vcRef = this._propertiesHost.viewContainerRef;
+      // const ref = vcRef.createComponent(factory);
+    })
+  }
 
 }

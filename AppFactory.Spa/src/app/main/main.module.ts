@@ -6,6 +6,7 @@ import { DatabaseNodeComponent } from './database/nodes/database-node/database-n
 import { EnvironmentNodeComponent } from './database/nodes/environment-node/environment-node.component';
 import { CredentialsNodeComponent } from './database/nodes/credentials-node/credentials-node.component';
 import { ContextNodeComponent } from './database/nodes/context-node/context-node.component';
+import { DatabaseService } from './database/service/database.service';
 
 
 
@@ -20,6 +21,9 @@ import { ContextNodeComponent } from './database/nodes/context-node/context-node
   imports: [
     CommonModule,
     BaseModule
+  ],
+  providers: [
+    DatabaseService,
   ],
   exports: [
     DatabaseComponent,
