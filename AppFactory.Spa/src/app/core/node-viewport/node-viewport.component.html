@@ -1,9 +1,14 @@
-<div class="node-viewport-container">
+<div class="node-viewport-container" #container>
     <div class="viewport-area">
-        <ng-template spaghettiHost>
+        <ng-template host>
             <spaghetti></spaghetti>
         </ng-template>
-        <node [style.--color]="colors.blue"></node>
+
+        <node
+            [style.--color]="colors.blue"
+            [viewportRef]="this"
+            [properties]="tempProperties"
+            ></node>
         <node [style.--color]="colors.green"></node>
     </div>
 </div>

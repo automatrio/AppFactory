@@ -9,6 +9,10 @@
 
 .viewport-area {
     position: relative;
-    width: 2000px;
-    height: 2000px;
+    width: var(--viewport-width);
+    height: var(--viewport-height);
+}
+
+#svg-bloom {
+    filter: url(#blurFilter);
 }

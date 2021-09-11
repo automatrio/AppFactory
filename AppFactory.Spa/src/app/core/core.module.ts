@@ -4,24 +4,23 @@ import { NodeViewportComponent } from './node-viewport/node-viewport.component';
 import { BaseModule } from '../base/base.module';
 import { SpaghettiComponent } from './spaghetti/spaghetti.component';
 import { SpaghettiService } from './spaghetti/spaghetti.service';
-import { SpaghettiHostDirective } from './node-viewport/spaghetti-host.directive';
+import { CommonSharedModule } from '../common/common-shared.module';
 
 @NgModule({
   declarations: [
     NodeViewportComponent,
-    SpaghettiComponent,
-    SpaghettiHostDirective,
+    SpaghettiComponent
   ],
   imports: [
     CommonModule,
     BaseModule,
+    CommonSharedModule
   ],
   providers: [
     SpaghettiService
   ],
   exports: [
-    NodeViewportComponent,
-    SpaghettiHostDirective
+    NodeViewportComponent
   ]
 })
 export class CoreModule { }

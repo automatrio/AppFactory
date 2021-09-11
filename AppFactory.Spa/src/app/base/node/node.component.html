@@ -1,4 +1,8 @@
-<div class="box-container" cdkDrag>
+<div class="box-container"
+    cdkDrag 
+    cdkDragBoundary=".viewport-area" 
+    (cdkDragMoved)="onDragMoved($event)"
+    >
     <div class="shadow">
         <div class="outer-glow-container">
             <div class="inner-glow-container">
@@ -17,15 +21,11 @@
 
                 <div class="node-body">
 
-                    <node-property
-                        [type]="'input'"
+                    <ng-template spaghettiHost>
+                        <node-property
                         [style.--color]="'55,55,255'"
-                        (slotClicked)="onSlotClicked($event)"></node-property>
-
-                    <node-property
-                        [type]="'output'"
-                        [style.--color]="'55,55,255'"
-                        (slotClicked)="onSlotClicked($event)"></node-property>
+                        (slotClicked)="onSlotClicked($event)"></node-property>>
+                    </ng-template>            
 
                 </div>
 

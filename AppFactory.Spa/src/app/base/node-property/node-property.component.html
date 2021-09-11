@@ -1,6 +1,7 @@
 <div class="property-container">
     <slot 
         *ngIf="type && type=='input'"
+        #inputSlot
         [ngClass]="
             (type=='input')
                 ? 'input-slot' 
@@ -12,7 +13,8 @@
 
     <input placeholder="Ex. Value" value="Value">
 
-    <slot 
+    <slot
+        #outputSlot
         *ngIf="type && type=='output'"
         [style.--color]="'55,55,255'"
         (slotClicked)="onSlotClicked($event)">

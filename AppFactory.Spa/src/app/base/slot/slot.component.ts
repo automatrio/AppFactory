@@ -1,4 +1,6 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, RendererFactory2, ViewChild } from '@angular/core';
+import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
+import { SpaghettiComponent } from 'src/app/core/spaghetti/spaghetti.component';
 import { SpaghettiService } from 'src/app/core/spaghetti/spaghetti.service';
 
 @Component({
@@ -12,6 +14,12 @@ import { SpaghettiService } from 'src/app/core/spaghetti/spaghetti.service';
 })
 export class Slot implements OnInit {
 
+  private _activeSlot: Slot;
+  private _renderer;
+  private _unlistenMouseUp: () => void;
+
+  @Input() boundSpaghetti: SpaghettiComponent;
+
   @HostBinding("style.--color")
     @Input() color: string;
 
@@ -19,7 +27,12 @@ export class Slot implements OnInit {
 
   @ViewChild('boxContainer') boxContainer: ElementRef<HTMLDivElement>;
 
-  constructor(private spaghettiService: SpaghettiService) { }
+  constructor(
+    private spaghettiService: SpaghettiService,
+    rendererFactory: RendererFactory2
+    ) {
+      this._renderer = rendererFactory.createRenderer(null, null);
+    }
 
   ngOnInit(): void {
   }
@@ -28,15 +41,24 @@ export class Slot implements OnInit {
 
   public onMouseDown(event: MouseEvent) {
     if(this.isWithin(event)) {
+      const viewport = this.spaghettiService.viewportRef.container.nativeElement;
       event.preventDefault();
+      this._activeSlot = this;
       this.slotClicked.emit(this);
     }
   }
 
-  public onMouseUp(event: MouseEvent) {
-    if(this.isWithin(event)) {
-      event.preventDefault();
-      this.spaghettiService.selectedSlot.next(this);
+  public onMouseUp (event: MouseEvent) {
+    if(!this.isWithin(event)) {
+      this.spaghettiService.selectedSlot.next(null);
+    } 
+    else {
+      if (this._activeSlot == this) {
+      this.spaghettiService.selectedSlot.next(null);
+      } 
+      else {
+        this.spaghettiService.selectedSlot.next(this);
+      }
     }
   }
 

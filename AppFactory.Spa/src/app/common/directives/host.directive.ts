@@ -1,8 +1,8 @@
 import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
-  selector: '[spaghettiHost]',
+  selector: '[host]',
 })
-export class SpaghettiHostDirective {
+export class HostDirective {
   constructor(public viewContainerRef: ViewContainerRef) { }
 }

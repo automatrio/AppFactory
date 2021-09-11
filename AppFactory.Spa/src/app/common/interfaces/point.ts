@@ -1,4 +1,5 @@
-import { SpaghettiPoints } from "./spaghettiPoints";
+import { SVG_PADDING } from "src/app/core/spaghetti/spaghetti.service";
+import { SpaghettiPoints } from "./spaghetti-points";
 
 export class Point {
     x: number;
@@ -6,10 +7,11 @@ export class Point {
 
     static CreateSVGArray (points: SpaghettiPoints) : string {
         let result: string;
-        result  = "0,0 ";
-        result += points.hmid.x   + "," + points.hmid.y   + " ";
-        result += points.hlow.x   + "," + points.hlow.y   + " ";
-        result += points.end.x    + "," + points.end.y;
+        result  = "M " + points.origin.x      + "," + points.origin.y    + " ";
+        result += "Q " + points.midhigh.x     + "," + points.midhigh.y   + " ";
+        result +=        points.midcenter.x   + "," + points.midcenter.y + " ";
+        result +=        points.midlow.x      + "," + points.midlow.y    + " ";
+        result +=        points.end.x         + "," + points.end.y       + " ";
 
         return result;
     }

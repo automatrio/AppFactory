@@ -1,6 +1,15 @@
-<div class="spaghetti">
+<div class="spaghetti"
+    *ngIf="(binding$ | async)">
     <svg [attr.height]="data.height" [attr.width]="data.width">
-        <polyline [attr.points]="data.points"
-        style="fill:none;stroke:white;stroke-width:5" />
+        <defs>
+            <filter id="blurFilter">
+                <feGaussianBlur in="SourceGraphic" [attr.stdDeviation]="glow"/>
+            </filter>
+        </defs> 
+        <path [attr.d]="svgPoints"
+            style="fill:none;stroke:white;stroke-width:3"/>
+        <path [attr.d]="svgPoints"
+            style="fill:none;stroke:white;stroke-width:3" filter="url(#blurFilter)"/>
     </svg>
+
 </div>

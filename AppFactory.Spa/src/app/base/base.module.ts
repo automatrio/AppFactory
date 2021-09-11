@@ -5,6 +5,7 @@ import { Node } from './node/node.component';
 import { AngularMaterialModule } from '../common/angular-material.module';
 import { NodeProperty } from './node-property/node-property.component';
 import { Slot } from './slot/slot.component';
+import { CommonSharedModule } from '../common/common-shared.module';
 
 
 
@@ -17,6 +18,7 @@ import { Slot } from './slot/slot.component';
   ],
   imports: [
     CommonModule,
+    CommonSharedModule,
     AngularMaterialModule
   ],
   exports: [

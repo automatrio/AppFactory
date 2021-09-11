@@ -2,7 +2,8 @@ import { Point } from "./point";
 
 export class SpaghettiPoints {
     origin: Point;
-    hmid: Point;
-    hlow: Point;
+    midhigh: Point;
+    midcenter: Point;
+    midlow: Point;
     end: Point;
 }
