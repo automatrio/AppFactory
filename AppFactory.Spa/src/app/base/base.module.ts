@@ -1,20 +1,23 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Tool } from './tool/tool.component';
-import { Node } from './node/node.component';
-import { AngularMaterialModule } from '../common/angular-material.module';
-import { NodeProperty } from './node-property/node-property.component';
-import { Slot } from './slot/slot.component';
-import { CommonSharedModule } from '../common/common-shared.module';
-
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { AngularMaterialModule } from "../common/angular-material.module";
+import { CommonSharedModule } from "../common/common-shared.module";
+import { NodeProperty } from "./node-property/node-property.component";
+import { NodeViewportComponent } from "./node-viewport/node-viewport.component";
+import { NodeComponent } from "./node/node.component";
+import { SlotComponent } from "./slot/slot.component";
+import { SpaghettiComponent } from "./spaghetti/spaghetti.component";
+import { ToolComponent } from "./tool/tool.component";
 
 
 @NgModule({
   declarations: [
-    Tool,
-    Node,
+    ToolComponent,
+    NodeComponent,
+    NodeViewportComponent,
     NodeProperty,
-    Slot
+    SlotComponent,
+    SpaghettiComponent,
   ],
   imports: [
     CommonModule,
@@ -22,8 +25,13 @@ import { CommonSharedModule } from '../common/common-shared.module';
     AngularMaterialModule
   ],
   exports: [
-    Tool,
-    Node
+    ToolComponent,
+    ToolComponent,
+    NodeComponent,
+    NodeProperty,
+    NodeViewportComponent,
+    SlotComponent,
+    SpaghettiComponent,
   ]
 })
 export class BaseModule { }

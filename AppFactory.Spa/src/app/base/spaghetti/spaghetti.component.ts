@@ -1,8 +1,7 @@
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
-import { from, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Point } from 'src/app/common/interfaces/point';
 import { SpaghettiData } from 'src/app/common/interfaces/spaghetti-data';
-import { SpaghettiPoints } from 'src/app/common/interfaces/spaghetti-points';
 import { SVG_PADDING } from './spaghetti.service';
 
 @Component({

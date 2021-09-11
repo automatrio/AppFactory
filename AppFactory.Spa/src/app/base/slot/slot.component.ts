@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, RendererFactory2, ViewChild } from '@angular/core';
-import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
-import { SpaghettiComponent } from 'src/app/core/spaghetti/spaghetti.component';
-import { SpaghettiService } from 'src/app/core/spaghetti/spaghetti.service';
+import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
+import { SpaghettiService } from '../spaghetti/spaghetti.service';
 
 @Component({
   selector: 'slot',
@@ -12,9 +11,9 @@ import { SpaghettiService } from 'src/app/core/spaghetti/spaghetti.service';
     './slot.component.css'
   ]
 })
-export class Slot implements OnInit {
+export class SlotComponent implements OnInit {
 
-  private _activeSlot: Slot;
+  private _activeSlot: SlotComponent;
   private _renderer;
   private _unlistenMouseUp: () => void;
 
@@ -23,7 +22,7 @@ export class Slot implements OnInit {
   @HostBinding("style.--color")
     @Input() color: string;
 
-  @Output() slotClicked = new EventEmitter<Slot>();
+  @Output() slotClicked = new EventEmitter<SlotComponent>();
 
   @ViewChild('boxContainer') boxContainer: ElementRef<HTMLDivElement>;
 

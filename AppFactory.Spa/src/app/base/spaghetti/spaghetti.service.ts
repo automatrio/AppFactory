@@ -1,7 +1,7 @@
 import { ComponentRef, ElementRef, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
 import { NodeProperty } from 'src/app/base/node-property/node-property.component';
-import { Node } from 'src/app/base/node/node.component';
-import { Slot } from 'src/app/base/slot/slot.component';
+import { NodeComponent } from 'src/app/base/node/node.component';
+import { SlotComponent } from 'src/app/base/slot/slot.component';
 import { SpaghettiData } from 'src/app/common/interfaces/spaghetti-data';
 import { Point } from 'src/app/common/interfaces/point';
 import { ReplaySubject } from 'rxjs';
@@ -16,8 +16,8 @@ export const SVG_PADDING = 10;
 })
 export class SpaghettiService {
 
-  private _outputSlot: Slot;
-  private _inputSlot: Slot;
+  private _outputSlot: SlotComponent;
+  private _inputSlot: SlotComponent;
 
   private _renderer: Renderer2;
   private _unlistenMouseMove: () => void;
@@ -28,7 +28,7 @@ export class SpaghettiService {
   private _currentDataSource = new ReplaySubject<SpaghettiData>();
   currentData$ = this._currentDataSource.asObservable();
 
-  selectedSlot = new ReplaySubject<Slot | null>(1);
+  selectedSlot = new ReplaySubject<SlotComponent | null>(1);
   viewportRef: NodeViewportComponent;
   ongoingSpaghetti: ComponentRef<SpaghettiComponent>;
 
@@ -45,9 +45,9 @@ export class SpaghettiService {
   ////////// PUBLIC METHODS //////////
 
   public createSpaghetti(event: {
-    node: Node,
+    node: NodeComponent,
     prop: NodeProperty,
-    slot: Slot,
+    slot: SlotComponent,
   }) {
     this._outputSlot = event.slot;
     const source = this.getCenter(this._outputSlot.boxContainer.nativeElement);
@@ -94,7 +94,7 @@ export class SpaghettiService {
 
   }
 
-  private terminateSpaghetti(slot: Slot | null) {
+  private terminateSpaghetti(slot: SlotComponent | null) {
     console.log("Receiving", slot);
     this._unlistenMouseMove();
     if(!slot) {

@@ -1,12 +1,13 @@
-import { Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, Type, ViewChild, ViewContainerRef } from '@angular/core';
-import { NodeProperty } from 'src/app/base/node-property/node-property.component';
-import { HostDirective } from 'src/app/common/directives/host.directive';
-import { Colors } from 'src/app/global/colors';
-import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
-import { SpaghettiService, SVG_PADDING } from '../spaghetti/spaghetti.service';
+import { Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, ViewChild } from "@angular/core";
+import { HostDirective } from "src/app/common/directives/host.directive";
+import { Colors } from "src/app/global/colors";
+import { NodeProperty } from "../node-property/node-property.component";
+import { SpaghettiComponent } from "../spaghetti/spaghetti.component";
+import { SpaghettiService } from "../spaghetti/spaghetti.service";
+
 
 @Component({
-  selector: 'app-node-viewport',
+  selector: 'node-viewport',
   templateUrl: './node-viewport.component.html',
   styleUrls: ['./node-viewport.component.css']
 })

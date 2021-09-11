@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Tool } from 'src/app/base/tool/tool.component';
+import { ToolComponent } from 'src/app/base/tool/tool.component';
 import { Colors } from 'src/app/global/colors';
 
 @Component({

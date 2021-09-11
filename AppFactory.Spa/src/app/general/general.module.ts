@@ -9,6 +9,7 @@ import { ExplorerNavigatorIconComponent } from './explorer/explorer-navigator-ic
 import { ExplorerHeaderComponent } from './explorer/explorer-header/explorer-header.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { CoreModule } from '../core/core.module';
+import { BaseModule } from '../base/base.module';
 
 @NgModule({
   declarations: [
@@ -18,12 +19,12 @@ import { CoreModule } from '../core/core.module';
     OptionsMenuComponent,
     ExplorerHeaderComponent,
     ExplorerNavigatorIconComponent,
-    
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     AppRoutingModule,
+    BaseModule,
     CoreModule
   ],
   providers: [

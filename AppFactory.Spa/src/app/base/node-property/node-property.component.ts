@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, HostBinding, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
+import { AfterViewInit, Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
 import { Property } from '../../common/interfaces/property';
-import { Slot } from '../slot/slot.component';
+import { NodeViewportComponent } from '../node-viewport/node-viewport.component';
+import { SlotComponent } from '../slot/slot.component';
 
 @Component({
   selector: 'node-property',
@@ -11,7 +11,7 @@ import { Slot } from '../slot/slot.component';
 export class NodeProperty implements AfterViewInit {
 
   property: Property;
-  public slot: Slot;
+  public slot: SlotComponent;
 
   @HostBinding("style.--color")
     @Input() color: string;
@@ -22,7 +22,7 @@ export class NodeProperty implements AfterViewInit {
   @Input() type: "input" | "output" = "output";
   private _viewportRef: NodeViewportComponent;
 
-  @Output() slotClicked = new EventEmitter<{prop: NodeProperty, slot: Slot}>();
+  @Output() slotClicked = new EventEmitter<{prop: NodeProperty, slot: SlotComponent}>();
 
   constructor(
     viewportRef: NodeViewportComponent) {
@@ -33,7 +33,7 @@ export class NodeProperty implements AfterViewInit {
     this.getSlot();
   }
 
-  public onSlotClicked(slot: Slot) {
+  public onSlotClicked(slot: SlotComponent) {
     this.slotClicked.emit({
       prop: this,
       slot: slot

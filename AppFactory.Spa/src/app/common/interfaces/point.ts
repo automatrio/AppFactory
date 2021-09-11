@@ -1,4 +1,3 @@
-import { SVG_PADDING } from "src/app/core/spaghetti/spaghetti.service";
 import { SpaghettiPoints } from "./spaghetti-points";
 
 export class Point {

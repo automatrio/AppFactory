@@ -1,12 +1,9 @@
-import { CdkDragMove } from '@angular/cdk/drag-drop';
 import { Component, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
 import { HostDirective } from 'src/app/common/directives/host.directive';
-import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
-import { SpaghettiComponent } from 'src/app/core/spaghetti/spaghetti.component';
-import { SpaghettiService } from 'src/app/core/spaghetti/spaghetti.service';
+import { NodeViewportComponent } from 'src/app/base/node-viewport/node-viewport.component';
 import { NodeProperty } from '../node-property/node-property.component';
-import { Slot } from '../slot/slot.component';
+import { SlotComponent } from '../slot/slot.component';
+import { SpaghettiService } from '../spaghetti/spaghetti.service';
 
 @Component({
   selector: 'node',
@@ -16,7 +13,7 @@ import { Slot } from '../slot/slot.component';
     '../styles/bloom-box.scss',
     '../styles/bloom-box-interactable.scss',]
 })
-export class Node implements OnInit {
+export class NodeComponent implements OnInit {
 
   @Input() title: string = "Title";
   @Input() viewportRef: NodeViewportComponent;
@@ -32,7 +29,7 @@ export class Node implements OnInit {
   ngOnInit(/*inject componentresolverfCTORY*/): void {
   }
 
-  public onSlotClicked(event: {prop: NodeProperty, slot: Slot}) {
+  public onSlotClicked(event: {prop: NodeProperty, slot: SlotComponent}) {
     this.spaghettiService.createSpaghetti({
       node: this,
       prop: event.prop,
