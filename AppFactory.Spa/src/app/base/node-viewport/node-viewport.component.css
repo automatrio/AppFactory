@@ -9,6 +9,7 @@
 
 .viewport-area {
     position: relative;
+    padding: 20px;
     width: var(--viewport-width);
     height: var(--viewport-height);
 }

@@ -8,7 +8,7 @@ import { CommonSharedModule } from './common/common-shared.module';
 import { GeneralModule } from './general/general.module';
 import { AngularMaterialModule } from './common/angular-material.module';
 import { CoreModule } from './core/core.module';
-import { MainModule } from './main/main.module';
+import { MainModule } from './pages/main.module';
 
 @NgModule({
   declarations: [

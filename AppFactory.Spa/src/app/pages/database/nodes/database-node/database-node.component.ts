@@ -1,8 +1,9 @@
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
-import { NodeProperty } from 'src/app/base/node-property/node-property.component';
 import { NodeComponent } from 'src/app/base/node/node.component';
 import { SpaghettiService } from 'src/app/base/spaghetti/spaghetti.service';
 import { Property } from 'src/app/common/models/property';
+import { Colors } from 'src/app/global/colors';
+import { PageService } from 'src/app/pages/service/page.service';
 import { Credentials } from '../../models/credentials';
 import { Database } from '../../models/database';
 import { Environment } from '../../models/environment';
@@ -16,19 +17,20 @@ export class DatabaseNodeComponent extends NodeComponent implements OnInit {
 
   private database: Database = new Database();
 
-  override _iconUrl: string = "../";
-  override _color: string = "rgb(78, 144, 230)";
-  override _title: string = "Database";
-  override _properties: Property<any>[] = [
-    new Property<string>("Database Name", this.database.name),
-    new Property<Credentials>("Credentials", this.database.credentials),
-    new Property<Environment>("Environment", this.database.environment)
+  colors = new Colors();
+  iconUrl: string = "../";
+  title: string = "Database";
+  properties: Property<any>[] = [
+    new Property<string>("Database Name", this.database.name, "input"),
+    new Property<Credentials>("Credentials", this.database.credentials, "input"),
+    new Property<Environment>("Environment", this.database.environment, "input")
   ];
 
   constructor(
     resolver: ComponentFactoryResolver,
+    pageService: PageService,
     spaghettiService: SpaghettiService) {
-    super(resolver, spaghettiService);
+    super(resolver, pageService, spaghettiService);
   }
 
   ngOnInit(): void {

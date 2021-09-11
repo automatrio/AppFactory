@@ -1,5 +1,5 @@
 .box-container {
-    width: fit-content;
+    width: 230px;
     height: fit-content
 }
 
@@ -16,9 +16,3 @@
     margin-left: 20px;
 }
 
-node-property {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}

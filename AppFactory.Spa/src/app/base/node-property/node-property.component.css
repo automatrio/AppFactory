@@ -1,13 +1,20 @@
 .property-container {
-    width: calc(100% + 30px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.grid {
     display: grid;
+    width: calc(100% + 30px);
     grid-template-columns: 30px 1fr 30px;
     margin-bottom: 15px;
     justify-items: center;
     align-items: center;
 }
 
-input {
+mat-form-field {
+    width: 200px;
     grid-column: 2 / 3;
 }
 

@@ -46,7 +46,7 @@ export class SpaghettiService {
 
   public createSpaghetti(event: {
     node: NodeComponent,
-    prop: NodeProperty<any>,
+    prop: NodeProperty,
     slot: SlotComponent,
   }) {
     this._outputSlot = event.slot;

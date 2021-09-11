@@ -1,18 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HostDirective } from './host.directive';
+import { SpaghettiHostDirective } from './spaghetti-host.directive';
+import { NodeHostDirective } from './node-host.directive';
+import { PropertyHostDirective } from './property-host.directive';
 
 
 
 @NgModule({
   declarations: [
-    HostDirective
+    SpaghettiHostDirective,
+    NodeHostDirective,
+    PropertyHostDirective
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    HostDirective
+    SpaghettiHostDirective,
+    NodeHostDirective,
+    PropertyHostDirective
   ]
 })
 export class DirectivesModule { }

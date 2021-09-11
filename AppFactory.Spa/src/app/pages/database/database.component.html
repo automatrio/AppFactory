@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="toolbar">
+        <tool 
+            (click)="createNewDatabase()"
+            [title]="'Create new database'" 
+            [style.--color]="colors.blue">
+        </tool>
+        <!-- <tool 
+            (click)="createNewContext()"
+            [title]="'Create new context'" 
+            [style.--color]="colors.orange">
+        </tool> -->
+        <tool 
+            (click)="createNewEnvironment()"
+            [title]="'Create new environment'"
+            [style.--color]="colors.green">
+        </tool>
+        <tool 
+        (click)="createNewCredentials()"
+        [title]="'Create new credentials'"
+        [style.--color]="colors.orange">
+    </tool>
+
+    </div>
+
+    <node-viewport #databaseNodeViewport></node-viewport>
+
+</div>

@@ -1,8 +1,9 @@
-import { Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, Type, ViewChild } from "@angular/core";
-import { HostDirective } from "src/app/common/directives/host.directive";
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, Type, ViewChild } from "@angular/core";
+import { NodeHostDirective } from "src/app/common/directives/node-host.directive";
+import { SpaghettiHostDirective } from "src/app/common/directives/spaghetti-host.directive";
 import { CommandService } from "src/app/core/services/command.service";
 import { Colors } from "src/app/global/colors";
-import { DatabaseService } from "src/app/main/database/service/database.service";
+import { DatabaseService } from "src/app/pages/database/service/database.service";
 import { NodeProperty } from "../node-property/node-property.component";
 import { NodeComponent } from "../node/node.component";
 import { SpaghettiComponent } from "../spaghetti/spaghetti.component";
@@ -14,7 +15,7 @@ import { SpaghettiService } from "../spaghetti/spaghetti.service";
   templateUrl: './node-viewport.component.html',
   styleUrls: ['./node-viewport.component.css']
 })
-export class NodeViewportComponent implements OnInit {
+export class NodeViewportComponent implements OnInit, AfterViewInit {
 
   spaghettis: SpaghettiComponent[];
   colors: Colors;
@@ -33,8 +34,8 @@ export class NodeViewportComponent implements OnInit {
   @HostBinding('style.--viewport-height')
     viewportHeight: string = this.dimensions.height + 'px'; 
     
-  @ViewChild('spaghettiHost', {static: true}) spaghettiHost!: HostDirective;
-  @ViewChild('nodeHost', {static: true}) nodeHost!: HostDirective;
+  @ViewChild(SpaghettiHostDirective, {static: true}) spaghettiHost!: SpaghettiHostDirective;
+  @ViewChild(NodeHostDirective, {static: true}) nodeHost!: NodeHostDirective;
   @ViewChild('container', {static: true}) container!: ElementRef<HTMLElement>;
 
   constructor(
@@ -51,16 +52,17 @@ export class NodeViewportComponent implements OnInit {
     this.getBoundingRect();
   }
 
+  //debug
+  ngAfterViewInit() {
+    console.log("host:", this.nodeHost.viewContainerRef);
+  }
+
   ////////// PRIVATE METHODS //////////
 
   private subscribeToInstantiations() {
     this.spaghettiService.instantiationQueued$.subscribe(() => {
-      this.spaghettiService.ongoingSpaghetti = this.instantiateSpaghetti();
+      // this.spaghettiService.ongoingSpaghetti = this.instantiateSpaghetti();
     });
-
-    this.databaseService.instantiationQueued$.subscribe(component => {
-      this.instantiateNode(component);
-    })
   }
 
   private initializeAllSpaghettis() {
@@ -68,26 +70,12 @@ export class NodeViewportComponent implements OnInit {
   }
 
   private instantiateSpaghetti() {
-    const componentRef = this.instantiate(SpaghettiComponent);
-    componentRef.instance.binding$ = this.spaghettiService.currentData$; 
+    // const componentRef = this.instantiate(SpaghettiComponent);
+    // componentRef.instance.binding$ = this.spaghettiService.currentData$; 
 
-    return componentRef;
+    // return componentRef;
   }
-
-  private instantiateNode(component: Type<unknown>) {
-    const componentRef = this.instantiate(component);
-
-    return componentRef;
-  }
-
-  private instantiate<T>(component: Type<T>) {
-    const type = <T> <unknown> undefined;
-    const factory = this.resolver.resolveComponentFactory(component);
-    const vcRef = this.spaghettiHost.viewContainerRef;
-    const componentRef = vcRef.createComponent<T>(factory); 
-
-    return componentRef;
-  }
+  
 
   private getBoundingRect() {
     const rect = this.container.nativeElement.getBoundingClientRect();

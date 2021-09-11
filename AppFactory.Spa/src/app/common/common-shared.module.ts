@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from './angular-material.module';
 import { DirectivesModule } from './directives/directives.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -10,11 +11,13 @@ import { DirectivesModule } from './directives/directives.module';
   imports: [
     CommonModule,
     DirectivesModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FormsModule
   ],
   exports: [
     DirectivesModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    FormsModule
   ]
 })
 export class CommonSharedModule { }

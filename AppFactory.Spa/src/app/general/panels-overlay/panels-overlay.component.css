@@ -19,14 +19,6 @@ app-navbar {
     grid-row: 1 / 2;
 }
 
-.work-area {
-    display: grid;
-    grid-template-columns: 245px 1fr;
-    grid-template-rows: calc(100vh - 85px);
-    gap: 0px;
-    padding: 20px;
-}
-
 router-outlet {
     grid-area: main; 
 }
