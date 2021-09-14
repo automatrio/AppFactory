@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, RendererFactory2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, Renderer2, RendererFactory2, ViewChild } from '@angular/core';
 import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
 import { SpaghettiService } from '../spaghetti/spaghetti.service';
 
@@ -11,10 +11,10 @@ import { SpaghettiService } from '../spaghetti/spaghetti.service';
     './slot.component.css'
   ]
 })
-export class SlotComponent implements OnInit {
-
+export class SlotComponent implements OnInit, AfterViewInit {
+  
   private _activeSlot: SlotComponent;
-  private _renderer;
+  private _renderer: Renderer2;
   private _unlistenMouseUp: () => void;
 
   @Input() boundSpaghetti: SpaghettiComponent;
@@ -24,40 +24,33 @@ export class SlotComponent implements OnInit {
 
   @Output() slotClicked = new EventEmitter<SlotComponent>();
 
-  @ViewChild('boxContainer') boxContainer: ElementRef<HTMLDivElement>;
+  @ViewChild('boxContainer') boxContainer!: ElementRef<HTMLDivElement>;
 
   constructor(
-    private spaghettiService: SpaghettiService,
-    rendererFactory: RendererFactory2
+      private spaghettiService: SpaghettiService,
+      private renderer: RendererFactory2
     ) {
-      this._renderer = rendererFactory.createRenderer(null, null);
-    }
+    this._renderer = this.renderer.createRenderer(null, null);
+    this.spaghettiService.listenToMouseUpQueued$.subscribe(event => {
+      this.onMouseUp(event);
+    });
+  }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(): void {
+
   }
 
   ////////// PUBLIC METHODS //////////
 
   public onMouseDown(event: MouseEvent) {
     if(this.isWithin(event)) {
-      const viewport = this.spaghettiService.viewportRef.container.nativeElement;
       event.preventDefault();
       this._activeSlot = this;
       this.slotClicked.emit(this);
-    }
-  }
-
-  public onMouseUp (event: MouseEvent) {
-    if(!this.isWithin(event)) {
-      this.spaghettiService.selectedSlot.next(null);
-    } 
-    else {
-      if (this._activeSlot == this) {
-      this.spaghettiService.selectedSlot.next(null);
-      } 
-      else {
-        this.spaghettiService.selectedSlot.next(this);
-      }
     }
   }
 
@@ -69,6 +62,20 @@ export class SlotComponent implements OnInit {
     const isWithinY = event.y > rect.top && event.y < rect.bottom;
     
     return (isWithinX && isWithinY);
+  }
+
+  private onMouseUp = (event: MouseEvent) => {
+    if(!this.isWithin(event)) {
+      this.spaghettiService.selectedSlot.next(null);
+    } 
+    else {
+      if (this._activeSlot == this) {
+      this.spaghettiService.selectedSlot.next(null);
+      } 
+      else {
+        this.spaghettiService.selectedSlot.next(this);
+      }
+    }
   }
 
 }

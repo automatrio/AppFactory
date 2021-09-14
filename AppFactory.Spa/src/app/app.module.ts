@@ -1,14 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CommonSharedModule } from './common/common-shared.module';
-import { GeneralModule } from './general/general.module';
-import { AngularMaterialModule } from './common/angular-material.module';
-import { CoreModule } from './core/core.module';
-import { MainModule } from './pages/main.module';
+import { PagesModule } from './pages/pages.module';
 
 @NgModule({
   declarations: [
@@ -16,12 +11,8 @@ import { MainModule } from './pages/main.module';
   ],
   imports: [
     BrowserModule,
+    PagesModule,
     BrowserAnimationsModule,
-    CommonSharedModule,
-    GeneralModule,
-    MainModule,
-    CoreModule,
-    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

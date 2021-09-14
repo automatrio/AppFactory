@@ -12,6 +12,7 @@
     padding: 20px;
     width: var(--viewport-width);
     height: var(--viewport-height);
+    backdrop-filter: blur(3px);
 }
 
 #svg-bloom {

@@ -2,6 +2,7 @@ import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core
 import { Observable } from 'rxjs';
 import { Point } from 'src/app/common/interfaces/point';
 import { SpaghettiData } from 'src/app/common/interfaces/spaghetti-data';
+import { SlotComponent } from '../slot/slot.component';
 import { SVG_PADDING } from './spaghetti.service';
 
 @Component({
@@ -10,6 +11,9 @@ import { SVG_PADDING } from './spaghetti.service';
   styleUrls: ['./spaghetti.component.css']
 })
 export class SpaghettiComponent implements OnInit {
+
+  inputSlot: SlotComponent;
+  outputSlot: SlotComponent;
 
   data: SpaghettiData;
   svgPoints: string;

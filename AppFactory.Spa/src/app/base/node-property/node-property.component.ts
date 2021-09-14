@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, HostBinding, Input, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Property } from '../../common/models/property';
 import { NodeViewportComponent } from '../node-viewport/node-viewport.component';
 import { SlotComponent } from '../slot/slot.component';
@@ -8,23 +8,23 @@ import { SlotComponent } from '../slot/slot.component';
   templateUrl: './node-property.component.html',
   styleUrls: ['./node-property.component.css']
 })
-export class NodeProperty implements AfterViewInit {
+export class NodeProperty implements OnInit {
 
   property: Property<any>;
-  slot: SlotComponent;
+  hasSlot: boolean;
 
   @HostBinding("style.--color")
     color: string;
 
-  @ViewChild('inputSlot', {static: false}) private _inputSlot?: any;
-  @ViewChild('outputSlot', {static: false}) private _outputSlot?: any;
-
   @Output() slotClicked = new EventEmitter<{prop: NodeProperty, slot: SlotComponent}>();
 
-  constructor() {}
+  constructor() {
+    
+  }
 
-  ngAfterViewInit(): void {
-    this.getSlot();
+  ngOnInit(): void {
+    this.color = this.property.color;
+    this.hasSlot = this.property.hasSlot;
   }
 
   public onSlotClicked(slot: SlotComponent) {
@@ -32,15 +32,6 @@ export class NodeProperty implements AfterViewInit {
       prop: this,
       slot: slot
     });
-  }
-
-  private getSlot() {
-    if(this.property.type == 'input') {
-      this.slot = this._inputSlot;
-    } 
-    else if(this.property.type == 'output'){
-      this.slot = this._outputSlot;
-    }
   }
 
 }

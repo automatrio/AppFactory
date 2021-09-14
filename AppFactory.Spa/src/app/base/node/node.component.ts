@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { NodeViewportComponent } from 'src/app/base/node-viewport/node-viewport.component';
 import { NodeProperty } from '../node-property/node-property.component';
 import { SlotComponent } from '../slot/slot.component';
@@ -17,6 +17,8 @@ import { PropertyHostDirective } from 'src/app/common/directives/property-host.d
 })
 export class NodeComponent implements OnInit {
 
+  @Input() entity: Record<string, any>;
+  @Input() hasOutput: boolean;
   @Input() iconUrl: string;
   @Input() title: string;
   @Input() properties: Property<any>[];
@@ -24,7 +26,8 @@ export class NodeComponent implements OnInit {
   @HostBinding("style.--color")
     @Input() color: string;
 
-  @ViewChild(PropertyHostDirective, {static: true}) propertyHost!: PropertyHostDirective;
+  @ViewChild(SlotComponent, {static: false}) private outputSlot!: SlotComponent | null;
+  @ViewChild(PropertyHostDirective, {static: true}) private propertyHost!: PropertyHostDirective;
 
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -43,15 +46,28 @@ export class NodeComponent implements OnInit {
     });
   }
 
+  public onOutputSlotClicked() {
+    this.spaghettiService.createSpaghetti({
+      node: this,
+      prop: this.properties,
+      slot: this.outputSlot!
+    });
+  }
+
   public onDragMoved(event: any){
     this.properties?.forEach(prop => {
     });
   }
 
+  public assignToProperty(property: string, value: any) {
+    this.entity[property] = value;
+    // TICKET
+    // Introduce error handling
+  }
+
   ////////// PRIVATE METHODS ///////////
 
   private createProperties() {
-    console.log("properties", this.properties);
     this.properties?.forEach(prop => {
       const type = prop.getType();
       const factory = this.resolver.resolveComponentFactory(NodeProperty);

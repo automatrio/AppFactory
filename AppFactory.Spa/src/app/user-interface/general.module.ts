@@ -35,4 +35,4 @@ import { BaseModule } from '../base/base.module';
     PanelsOverlayComponent
   ]
 })
-export class GeneralModule { }
+export class UserInterfaceModule { }

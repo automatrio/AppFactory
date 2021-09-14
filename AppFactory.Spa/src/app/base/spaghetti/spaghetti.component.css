@@ -2,4 +2,9 @@
     position: absolute;
     top: var(--top);
     left: var(--left);
+    z-index: 4;
+}
+
+.spaghetti, .spaghetti * {
+    pointer-events: none;
 }

@@ -1,15 +1,12 @@
-import { ComponentFactoryResolver, Injectable, Type, ViewContainerRef } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
-import { CreateNodeCommand } from 'src/app/base/command/command';
+import { Injectable } from '@angular/core';
 import { CommandService } from 'src/app/core/services/command.service';
-import { CreateNewDatabaseCommand } from '../commands/create-new-database.command';
-import { ContextNodeComponent } from '../nodes/context-node/context-node.component';
+import { DatabaseModule } from '../database.module';
 import { CredentialsNodeComponent } from '../nodes/credentials-node/credentials-node.component';
 import { DatabaseNodeComponent } from '../nodes/database-node/database-node.component';
 import { EnvironmentNodeComponent } from '../nodes/environment-node/environment-node.component';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: DatabaseModule
 })
 export class DatabaseService {
 

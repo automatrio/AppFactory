@@ -34,4 +34,5 @@ import { ToolComponent } from "./tool/tool.component";
     SpaghettiComponent,
   ]
 })
-export class BaseModule { }
+
+export class BaseModule {}

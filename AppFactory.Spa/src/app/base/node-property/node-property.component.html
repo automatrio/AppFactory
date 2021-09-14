@@ -1,27 +1,15 @@
 <div class="property-container">
-    <div class="grid">
-        <slot 
-            *ngIf="property.type && property.type=='input'"
-            #inputSlot
-            [ngClass]="
-                (property.type=='input')
-                    ? 'input-slot' 
-                    : 'output-slot'"
-            [style.--color]="'55,55,255'"
+    <div class="node-grid">
+        <slot
+            *ngIf="hasSlot"
+            [style.--color]="color"
             (slotClicked)="onSlotClicked($event)">
-        
         </slot>
 
         <mat-form-field color="primary" class="example-full-width" appearance="fill">
             <mat-label>{{property.name}}</mat-label>
-            <input matInput placeholder="Value" [(ngModel)]="property.binding" value="Value" disabled>
+            <input matInput placeholder="Value" [(ngModel)]="property.binding" value="Value" [disabled]="hasSlot">
         </mat-form-field>
 
-        <slot
-            #outputSlot
-            *ngIf="property.type && property.type=='output'"
-            [style.--color]="'55,55,255'"
-            (slotClicked)="onSlotClicked($event)">
-        </slot>
     </div>
 </div>

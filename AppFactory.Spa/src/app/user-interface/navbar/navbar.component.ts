@@ -11,10 +11,10 @@ export class NavbarComponent implements OnInit {
 
   @HostListener('document:keypress', ['$event'])
   invokeShortcut(event: KeyboardEvent) { 
-    const keyPressed = event.key;
-    const activeSection = this.sections.find(section => keyPressed == section.shortcut);
-    if(activeSection) 
-      this.navigate(activeSection.route);
+    // const keyPressed = event.key;
+    // const activeSection = this.sections.find(section => keyPressed == section.shortcut);
+    // if(activeSection) 
+    //   this.navigate(activeSection.route);
   }
 
   sections = SECTIONS;

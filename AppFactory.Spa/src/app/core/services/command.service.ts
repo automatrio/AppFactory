@@ -1,7 +1,8 @@
-import { ComponentFactoryResolver, Injectable, Type, ViewContainerRef } from '@angular/core';
-import { Command, CreateNodeCommand } from 'src/app/base/command/command';
-import { NodeComponent } from 'src/app/base/node/node.component';
-import { DatabaseNodeComponent } from 'src/app/pages/database/nodes/database-node/database-node.component';
+import { ComponentFactoryResolver, Injectable, RendererFactory2, Type, ViewContainerRef } from '@angular/core';
+import { Command } from 'src/app/base/command/command';
+import { CreateNodeCommand } from 'src/app/base/command/create-node.command';
+import { CreateSpaghettiCommand } from 'src/app/base/command/create-spaghetti.command';
+import { INode } from 'src/app/common/interfaces/node';
 import { PageService } from 'src/app/pages/service/page.service';
 
 @Injectable({
@@ -16,18 +17,25 @@ export class CommandService {
 
   constructor(
     private resolver: ComponentFactoryResolver,
+    private renderer: RendererFactory2,
     private pageService: PageService
     ) { }
 
   ////////// PUBLIC METHODS ///////////
 
-  public getNewNodeCreationCommand< T extends NodeComponent >(component: Type<T>) {
+  public getNewNodeCreationCommand< T extends INode >(component: Type<T>) {
     const command = new CreateNodeCommand<T>(this.resolver);
-    command.viewContainerRef = this.pageService.viewportRef.nodeHost.viewContainerRef;
+    command.componentHost = this.pageService.viewportRef.nodeHost.viewContainerRef;
     command.component = component;
     this.insertCommandIntoList(command);
     return command;
   }
+
+  public getNewSpaghettiCreationCommand() {
+    const command = new CreateSpaghettiCommand(this.resolver, this.renderer);
+    this.insertCommandIntoList(command);
+    return command;
+  } 
 
   /////////// PRIVATE METHODS //////////
 

@@ -15,7 +15,7 @@ import { SpaghettiService } from "../spaghetti/spaghetti.service";
   templateUrl: './node-viewport.component.html',
   styleUrls: ['./node-viewport.component.css']
 })
-export class NodeViewportComponent implements OnInit, AfterViewInit {
+export class NodeViewportComponent implements OnInit {
 
   spaghettis: SpaghettiComponent[];
   colors: Colors;
@@ -39,43 +39,17 @@ export class NodeViewportComponent implements OnInit, AfterViewInit {
   @ViewChild('container', {static: true}) container!: ElementRef<HTMLElement>;
 
   constructor(
-    private spaghettiService: SpaghettiService,
-    private databaseService: DatabaseService,
-    private resolver: ComponentFactoryResolver) {
+    private spaghettiService: SpaghettiService) {
     this.colors = new Colors();
-    this.spaghettiService.viewportRef = this;
+    this.spaghettiService.nodeViewport = this;
   }
 
   ngOnInit(): void {
-    this.subscribeToInstantiations();
-    this.initializeAllSpaghettis();
     this.getBoundingRect();
-  }
-
-  //debug
-  ngAfterViewInit() {
-    console.log("host:", this.nodeHost.viewContainerRef);
   }
 
   ////////// PRIVATE METHODS //////////
 
-  private subscribeToInstantiations() {
-    this.spaghettiService.instantiationQueued$.subscribe(() => {
-      // this.spaghettiService.ongoingSpaghetti = this.instantiateSpaghetti();
-    });
-  }
-
-  private initializeAllSpaghettis() {
-
-  }
-
-  private instantiateSpaghetti() {
-    // const componentRef = this.instantiate(SpaghettiComponent);
-    // componentRef.instance.binding$ = this.spaghettiService.currentData$; 
-
-    // return componentRef;
-  }
-  
 
   private getBoundingRect() {
     const rect = this.container.nativeElement.getBoundingClientRect();
