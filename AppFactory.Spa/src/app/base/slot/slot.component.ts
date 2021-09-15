@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnInit, Output, Renderer2, RendererFactory2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { NodeComponent } from '../node/node.component';
 import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
 import { SpaghettiService } from '../spaghetti/spaghetti.service';
 
@@ -14,10 +15,10 @@ import { SpaghettiService } from '../spaghetti/spaghetti.service';
 export class SlotComponent implements OnInit, AfterViewInit {
   
   private _activeSlot: SlotComponent;
-  private _renderer: Renderer2;
-  private _unlistenMouseUp: () => void;
 
+  @Input() parentNode: NodeComponent;
   @Input() boundSpaghetti: SpaghettiComponent;
+  @Input() type: "input" | "output";
 
   @HostBinding("style.--color")
     @Input() color: string;
@@ -28,12 +29,8 @@ export class SlotComponent implements OnInit, AfterViewInit {
 
   constructor(
       private spaghettiService: SpaghettiService,
-      private renderer: RendererFactory2
     ) {
-    this._renderer = this.renderer.createRenderer(null, null);
-    this.spaghettiService.listenToMouseUpQueued$.subscribe(event => {
-      this.onMouseUp(event);
-    });
+
   }
 
   ngOnInit(): void {
@@ -41,7 +38,11 @@ export class SlotComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-
+    this.spaghettiService.listenToMouseUpQueued$
+      .subscribe(event => {
+        this.onMouseUp(event);
+      });
+    this.spaghettiService.amountOfSlots++;
   }
 
   ////////// PUBLIC METHODS //////////

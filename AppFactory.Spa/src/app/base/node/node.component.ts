@@ -6,6 +6,7 @@ import { SpaghettiService } from '../spaghetti/spaghetti.service';
 import { Property } from 'src/app/common/models/property';
 import { PageService } from 'src/app/pages/service/page.service';
 import { PropertyHostDirective } from 'src/app/common/directives/property-host.directive';
+import { INode } from 'src/app/common/interfaces/node';
 
 @Component({
   selector: 'node',
@@ -15,8 +16,10 @@ import { PropertyHostDirective } from 'src/app/common/directives/property-host.d
     '../styles/bloom-box.scss',
     '../styles/bloom-box-interactable.scss',]
 })
-export class NodeComponent implements OnInit {
+export class NodeComponent implements OnInit, INode {
 
+  @Input() data: Record<string, any>;
+  @Input() nodeType: string;
   @Input() entity: Record<string, any>;
   @Input() hasOutput: boolean;
   @Input() iconUrl: string;
@@ -33,6 +36,7 @@ export class NodeComponent implements OnInit {
     private resolver: ComponentFactoryResolver,
     private pageService: PageService,
     private spaghettiService: SpaghettiService) { }
+  
 
   ngOnInit(): void {
     this.createProperties();
@@ -59,21 +63,18 @@ export class NodeComponent implements OnInit {
     });
   }
 
-  public assignToProperty(property: string, value: any) {
-    this.entity[property] = value;
-    // TICKET
-    // Introduce error handling
-  }
-
   ////////// PRIVATE METHODS ///////////
 
   private createProperties() {
     this.properties?.forEach(prop => {
-      const type = prop.getType();
       const factory = this.resolver.resolveComponentFactory(NodeProperty);
       const vcRef = this.propertyHost.viewContainerRef;
       const componentRef = vcRef.createComponent(factory);
       componentRef.instance.property = prop;
+      componentRef.instance.parentNode = this;
+      componentRef.instance.propertyChanged.subscribe(newValue => {
+        this.data[prop.name.toLowerCase()] = newValue;
+      });
     })
   }
 

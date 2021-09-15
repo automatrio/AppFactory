@@ -14,13 +14,16 @@ import { Environment } from '../../models/environment';
 })
 export class EnvironmentNodeComponent implements INode, OnInit {
 
-  private environment: Environment = new Environment();
+  data: Environment = {
+    name: ""
+  } as Environment;
+  nodeType = "environment";
 
   colors = new Colors();
   iconUrl: string = "../";
   title: string = "Environment";
   properties: Property<any>[] = [
-    new Property<string>("Name", this.environment.name, false, this.colors.green),
+    new Property<string>("Name", this.data.name, false, this.colors.green),
   ];
 
   constructor() {

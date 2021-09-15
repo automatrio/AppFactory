@@ -1,14 +1,16 @@
 <div class="property-container">
     <div class="node-grid">
         <slot
-            *ngIf="hasSlot"
-            [style.--color]="color"
+            *ngIf="property.hasSlot"
+            [parentNode]="parentNode"
+            [type]="'input'"
+            [style.--color]="property.color"
             (slotClicked)="onSlotClicked($event)">
         </slot>
 
         <mat-form-field color="primary" class="example-full-width" appearance="fill">
             <mat-label>{{property.name}}</mat-label>
-            <input matInput placeholder="Value" [(ngModel)]="property.binding" value="Value" [disabled]="hasSlot">
+            <input matInput placeholder="Value" [(ngModel)]="property.binding" value="Value" [disabled]="property.hasSlot" (ngModelChange)="logChange()">
         </mat-form-field>
 
     </div>

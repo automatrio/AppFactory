@@ -14,16 +14,22 @@ import { Credentials } from '../../models/credentials';
 })
 export class CredentialsNodeComponent implements INode, OnInit {
 
-  private credentials: Credentials = new Credentials();
+  data: Credentials = {
+    dataSource: "",
+    userId: "",
+    password: "",
+    initialCatalog: "",
+  } as Credentials;
+  nodeType = "credentials";
 
   colors = new Colors();
   iconUrl: string = "../";
   title: string = "Credentials";
   properties: Property<any>[] = [
-    new Property<string>("Data Source", this.credentials.dataSource, false),
-    new Property<string>("Initial Catalog", this.credentials.initialCatalog, false),
-    new Property<string>("User ID", this.credentials.userId, false),
-    new Property<string>("Password", this.credentials.password, false),
+    new Property<string>("Data Source", this.data.dataSource, false),
+    new Property<string>("Initial Catalog", this.data.initialCatalog, false),
+    new Property<string>("User ID", this.data.userId, false),
+    new Property<string>("Password", this.data.password, false),
   ];
 
   constructor() {

@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Property } from '../../common/models/property';
 import { NodeViewportComponent } from '../node-viewport/node-viewport.component';
+import { NodeComponent } from '../node/node.component';
 import { SlotComponent } from '../slot/slot.component';
 
 @Component({
@@ -10,21 +12,19 @@ import { SlotComponent } from '../slot/slot.component';
 })
 export class NodeProperty implements OnInit {
 
-  property: Property<any>;
-  hasSlot: boolean;
+  propertyChanged = new ReplaySubject<any>(1);
 
-  @HostBinding("style.--color")
-    color: string;
+  @Input() property: Property<any>;
+  @Input() parentNode: NodeComponent;
 
   @Output() slotClicked = new EventEmitter<{prop: NodeProperty, slot: SlotComponent}>();
+  
 
   constructor() {
-    
   }
 
   ngOnInit(): void {
-    this.color = this.property.color;
-    this.hasSlot = this.property.hasSlot;
+    this.propertyChanged
   }
 
   public onSlotClicked(slot: SlotComponent) {
@@ -32,6 +32,10 @@ export class NodeProperty implements OnInit {
       prop: this,
       slot: slot
     });
+  }
+
+  public logChange() {
+    this.propertyChanged.next(this.property.binding);
   }
 
 }

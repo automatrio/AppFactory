@@ -3,6 +3,7 @@ import { ReplaySubject } from "rxjs";
 import { Point } from "src/app/common/interfaces/point";
 import { SpaghettiData } from "src/app/common/interfaces/spaghetti-data";
 import { SpaghettiPoints } from "src/app/common/interfaces/spaghetti-points";
+import { Binding } from "src/app/common/models/binding";
 import { NodeViewportComponent } from "../node-viewport/node-viewport.component";
 import { SlotComponent } from "../slot/slot.component";
 import { SpaghettiComponent } from "../spaghetti/spaghetti.component";
@@ -10,7 +11,7 @@ import { Command } from "./command";
 
 export class CreateSpaghettiCommand extends Command {
 
-    slot: SlotComponent;
+    binding: Binding = new Binding();
     nodeViewport: NodeViewportComponent;
     spaghettiRef: ComponentRef<SpaghettiComponent>;
 
@@ -29,7 +30,10 @@ export class CreateSpaghettiCommand extends Command {
 
     public Execute(): void {
 
-        const source = this.getCenter(this.slot.boxContainer.nativeElement);
+        const source = this.getCenter(
+          this.binding.inputSlot?.boxContainer.nativeElement
+          ||
+          this.binding.outputSlot?.boxContainer.nativeElement);
 
         this.instantiateSpaghetti();
     
@@ -52,17 +56,34 @@ export class CreateSpaghettiCommand extends Command {
         throw new Error("Method not implemented.");
     }
 
-    public terminateSpaghetti(slot: SlotComponent | null) {
-        this._unlistenMouseMove();
-        if(!slot) {
-          this.spaghettiRef.destroy();
-        }
-        else {
-          console.log("Received slot", slot);
-          slot.boundSpaghetti = this.spaghettiRef.instance;
-        }
+    public terminateSpaghetti(slot: SlotComponent | null, destroy: boolean) : Binding | null {
+      this._unlistenMouseMove();
+      this.storeSlot(slot);
+      if(this.binding.isComplete()) {
+        return this.binding;
       }
+      else {
+        if (destroy)
+          this.spaghettiRef.destroy();
+        return null;
+      }
+    }
 
+    public storeSlot(slot: SlotComponent | null) : boolean {
+      if(slot) {
+        if(slot.type == "input") {
+          this.binding.inputSlot = slot!;
+        } 
+        else if (slot.type == "output") {
+          this.binding.outputSlot = slot!;
+        }
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+    
     ////////// PRIVATE METHODS //////////
 
     private getSpaghettiPoints(source: Point, destination: Point): SpaghettiData {

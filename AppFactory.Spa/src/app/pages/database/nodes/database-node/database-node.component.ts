@@ -16,15 +16,20 @@ import { Environment } from '../../models/environment';
 })
 export class DatabaseNodeComponent implements INode, OnInit {
 
-  database: Database = new Database();
+  data: Database = {
+    name: "Database",
+    credentials: new Credentials(),
+    environment: new Environment()
+  } as Database;
+  nodeType = "database";
 
   colors = new Colors();
   iconUrl: string = "../";
   title: string = "Database";
   properties: Property<any>[] = [
-    new Property<string>("Database Name", this.database.name, false),
-    new Property<Credentials>("Credentials", this.database.credentials, true, this.colors.orange),
-    new Property<Environment>("Environment", this.database.environment, true, this.colors.green)
+    new Property<string>("Database Name", this.data.name, false),
+    new Property<Credentials>("Credentials", this.data.credentials, true, this.colors.orange),
+    new Property<Environment>("Environment", this.data.environment, true, this.colors.green)
   ];
 
   constructor() {
