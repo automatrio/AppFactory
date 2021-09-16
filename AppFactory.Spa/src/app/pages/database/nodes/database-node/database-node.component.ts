@@ -3,6 +3,7 @@ import { NodeComponent } from 'src/app/base/node/node.component';
 import { SpaghettiService } from 'src/app/base/spaghetti/spaghetti.service';
 import { INode } from 'src/app/common/interfaces/node';
 import { Property } from 'src/app/common/models/property';
+import { DataService } from 'src/app/core/services/data.service';
 import { Colors } from 'src/app/global/colors';
 import { PageService } from 'src/app/pages/service/page.service';
 import { Credentials } from '../../models/credentials';
@@ -21,18 +22,19 @@ export class DatabaseNodeComponent implements INode, OnInit {
     credentials: new Credentials(),
     environment: new Environment()
   } as Database;
+  
   nodeType = "database";
-
   colors = new Colors();
   iconUrl: string = "../";
   title: string = "Database";
   properties: Property<any>[] = [
-    new Property<string>("Database Name", this.data.name, false),
-    new Property<Credentials>("Credentials", this.data.credentials, true, this.colors.orange),
-    new Property<Environment>("Environment", this.data.environment, true, this.colors.green)
+    new Property<Credentials>("Credentials", this.data, "credentials", true, this.colors.orange),
+    new Property<Environment>("Environment", this.data, "environment", true, this.colors.green)
   ];
 
-  constructor() {
+  constructor(private dataService: DataService) {
+    this.data.name = "Database" + this.dataService.getNodeTitleIndex(DatabaseNodeComponent);
+    this.dataService.appendNewNode(this);
   }
 
   ngOnInit(): void {

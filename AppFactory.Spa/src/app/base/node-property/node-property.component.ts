@@ -12,7 +12,7 @@ import { SlotComponent } from '../slot/slot.component';
 })
 export class NodeProperty implements OnInit {
 
-  propertyChanged = new ReplaySubject<any>(1);
+  boundTo: string;
 
   @Input() property: Property<any>;
   @Input() parentNode: NodeComponent;
@@ -24,7 +24,6 @@ export class NodeProperty implements OnInit {
   }
 
   ngOnInit(): void {
-    this.propertyChanged
   }
 
   public onSlotClicked(slot: SlotComponent) {
@@ -32,10 +31,6 @@ export class NodeProperty implements OnInit {
       prop: this,
       slot: slot
     });
-  }
-
-  public logChange() {
-    this.propertyChanged.next(this.property.binding);
   }
 
 }

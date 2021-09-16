@@ -34,8 +34,8 @@ export class NodeComponent implements OnInit, INode {
 
   constructor(
     private resolver: ComponentFactoryResolver,
-    private pageService: PageService,
-    private spaghettiService: SpaghettiService) { }
+    private spaghettiService: SpaghettiService) {
+    }
   
 
   ngOnInit(): void {
@@ -72,9 +72,7 @@ export class NodeComponent implements OnInit, INode {
       const componentRef = vcRef.createComponent(factory);
       componentRef.instance.property = prop;
       componentRef.instance.parentNode = this;
-      componentRef.instance.propertyChanged.subscribe(newValue => {
-        this.data[prop.name.toLowerCase()] = newValue;
-      });
+
     })
   }
 

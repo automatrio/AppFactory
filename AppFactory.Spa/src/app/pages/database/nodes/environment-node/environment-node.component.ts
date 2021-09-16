@@ -3,6 +3,7 @@ import { NodeComponent } from 'src/app/base/node/node.component';
 import { SpaghettiService } from 'src/app/base/spaghetti/spaghetti.service';
 import { INode } from 'src/app/common/interfaces/node';
 import { Property } from 'src/app/common/models/property';
+import { DataService } from 'src/app/core/services/data.service';
 import { Colors } from 'src/app/global/colors';
 import { PageService } from 'src/app/pages/service/page.service';
 import { Environment } from '../../models/environment';
@@ -17,16 +18,15 @@ export class EnvironmentNodeComponent implements INode, OnInit {
   data: Environment = {
     name: ""
   } as Environment;
-  nodeType = "environment";
 
+  nodeType = "environment";
   colors = new Colors();
   iconUrl: string = "../";
   title: string = "Environment";
-  properties: Property<any>[] = [
-    new Property<string>("Name", this.data.name, false, this.colors.green),
-  ];
 
-  constructor() {
+  constructor(private dataService: DataService) {
+    this.data.name = "Environment" + this.dataService.getNodeTitleIndex(EnvironmentNodeComponent);
+    this.dataService.appendNewNode(this);
   }
 
   ngOnInit(): void {

@@ -17,3 +17,8 @@
     width: 20px;
     justify-self: end;
 }
+
+.node-title {
+    padding: 10px 10px 0px 20px;
+    font-weight: bold;
+}

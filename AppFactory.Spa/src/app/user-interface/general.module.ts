@@ -10,6 +10,7 @@ import { ExplorerHeaderComponent } from './explorer/explorer-header/explorer-hea
 import { AppRoutingModule } from '../app-routing.module';
 import { CoreModule } from '../core/core.module';
 import { BaseModule } from '../base/base.module';
+import { ExplorerPropertyComponent } from './explorer/explorer-property/explorer-property.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { BaseModule } from '../base/base.module';
     OptionsMenuComponent,
     ExplorerHeaderComponent,
     ExplorerNavigatorIconComponent,
+    ExplorerPropertyComponent,
   ],
   imports: [
     CommonModule,

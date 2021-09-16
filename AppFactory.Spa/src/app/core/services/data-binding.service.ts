@@ -16,19 +16,13 @@ export class DataBindingService {
     const inputPropertiesKeys = Object.keys(inputData);
     const outputPropertyName = binding.outputSlot.parentNode.nodeType;
 
-    console.log("inpropr", inputPropertiesKeys)
-    console.log("outpropr", outputPropertyName)   
-    
     inputPropertiesKeys.forEach(prop => {
       if(prop == outputPropertyName) {
-        inputData[outputPropertyName] = outputData;
-        console.log("inputData[outputPropertyName]", inputData[outputPropertyName]);
-        console.log("outputData", outputData);
-        
+        inputData[outputPropertyName] = outputData; 
       }
     });
 
-    console.log(inputData);
+    console.log("newInputData", inputData);
   }
 
   private nameof<T>(name: Extract<keyof T, string>): string {
