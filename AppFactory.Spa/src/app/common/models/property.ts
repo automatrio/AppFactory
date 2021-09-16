@@ -1,3 +1,5 @@
+import { NodeComponent } from "src/app/core/node/node.component";
+
 export class Property<T> {
 
     constructor(name: string, nodeData: any, binding: string, hasSlot?: boolean, color?: string ) {
@@ -13,6 +15,8 @@ export class Property<T> {
     binding: string;
     hasSlot: boolean;
     color: string;
+
+    isBoundTo: NodeComponent;
 
     // data: T = new T();
 

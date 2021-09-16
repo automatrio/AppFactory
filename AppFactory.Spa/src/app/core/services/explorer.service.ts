@@ -42,13 +42,20 @@ export class ExplorerService {
   }
 
   private static assignPropertiesToGroups(node: NodeComponent) : {[name: string]: any[]} {
-    const properties = node.properties;
+    
     var groups: {[name: string]: any[]} = {
       "Object Properties": [new Property("Name", node.data, "name")]
     };
 
+    if(!node.properties) {
+      return groups;
+    }
+
+    var properties = node.properties;
+
     properties.forEach(prop => {
       const type = typeof(prop.nodeData[prop.binding]);
+
       if(type == "string" || type == "number" || type == "boolean") { // primitives
         if(!groups["Object Properties"]) {
           groups["Object Properties"] = [];
@@ -59,7 +66,16 @@ export class ExplorerService {
         if(!groups[prop.name]) {
           groups[prop.name] = [];
         }
-        groups[prop.name].push(prop);
+
+        if(prop.isBoundTo) {
+          groups[prop.name].push(new Property("Name", prop.isBoundTo.data, "name"));
+          prop.isBoundTo.properties?.forEach(boundProp => {
+            groups[prop.name].push(boundProp);
+          });
+        } 
+        else {
+          groups[prop.name].push(prop);
+        }
       }
     });
 

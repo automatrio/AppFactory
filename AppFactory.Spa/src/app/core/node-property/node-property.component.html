@@ -8,7 +8,7 @@
             (slotClicked)="onSlotClicked($event)">
         </slot>
 
-        <mat-form-field color="primary" class="example-full-width" appearance="fill" *ngIf="!property.hasSlot; else boundProperty">
+        <mat-form-field color="primary" appearance="fill" *ngIf="!property.hasSlot; else bindableProperty">
             <mat-label>{{property.name}}</mat-label>
             <input 
                 matInput
@@ -17,15 +17,26 @@
                 [disabled]="property.hasSlot">
         </mat-form-field>
 
-        <ng-template #boundProperty>
-            <mat-form-field color="primary" class="example-full-width" appearance="fill">
+        <ng-template #bindableProperty>
+            <mat-form-field color="accent" appearance="fill" *ngIf="!property.isBoundTo; else boundProperty">
                 <mat-label>{{property.name}}</mat-label>
                 <input
                     matInput
-                    placeholder="Value"
-                    [(ngModel)]="property.nodeData[property.binding]['name']"
+                    value="-- Empty --"
                     [disabled]="property.hasSlot">
             </mat-form-field>
+
+            <ng-template #boundProperty>
+                <mat-form-field color="accent" appearance="fill">
+                    <mat-label>{{property.name}}</mat-label>
+                    <input
+                        matInput
+                        [(ngModel)]="property.nodeData[property.binding]['name']"
+                        [disabled]="property.hasSlot">
+                </mat-form-field>
+            </ng-template> 
+
+
         </ng-template> 
 
     </div>

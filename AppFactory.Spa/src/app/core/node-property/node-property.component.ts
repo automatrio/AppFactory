@@ -12,8 +12,6 @@ import { SlotComponent } from '../slot/slot.component';
 })
 export class NodeProperty implements OnInit {
 
-  boundTo: string;
-
   @Input() property: Property<any>;
   @Input() parentNode: NodeComponent;
 

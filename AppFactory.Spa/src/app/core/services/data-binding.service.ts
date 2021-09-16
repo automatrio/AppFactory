@@ -22,7 +22,8 @@ export class DataBindingService {
       }
     });
 
-    console.log("newInputData", inputData);
+    const boundNodeProperty = binding.inputSlot.parentNode.properties.find(prop => prop.binding == outputPropertyName);
+    boundNodeProperty!.isBoundTo = binding.outputSlot.parentNode;
   }
 
   private nameof<T>(name: Extract<keyof T, string>): string {
