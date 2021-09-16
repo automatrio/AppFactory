@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PROPERTIES } from 'src/app/global/properties';
+import { HEADERS } from 'src/app/global/headers';
 
 @Component({
     selector: 'app-explorer-header',
@@ -10,15 +10,7 @@ import { PROPERTIES } from 'src/app/global/properties';
         </section>
         <hr>
     `,
-    styles: [`
-        .explorer-header {
-            display: flex;
-            align-items: center;
-        }
-        hr {
-            border-color:rgba(132, 132, 132, 0.6);
-        }
-    `]
+    styleUrls: ['../explorer.component.css']
 })
 export class ExplorerHeaderComponent implements OnInit {
     
@@ -29,7 +21,7 @@ export class ExplorerHeaderComponent implements OnInit {
     constructor() { }
   
     ngOnInit(): void {
-      const matchingInfo = PROPERTIES.find(el => el.headerTitle == this.headerTitle);
+      const matchingInfo = HEADERS.find(el => el.headerTitle == this.headerTitle);
       this.currentUrl = matchingInfo?.iconURL;
   
       if(!this.currentUrl) {

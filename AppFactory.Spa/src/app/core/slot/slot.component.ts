@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NodeComponent } from '../node/node.component';
 import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
-import { SpaghettiService } from '../spaghetti/spaghetti.service';
+import { SpaghettiService } from '../services/spaghetti.service';
 
 @Component({
   selector: 'slot',

@@ -1,4 +1,4 @@
-import { SlotComponent } from "src/app/base/slot/slot.component";
+import { SlotComponent } from "src/app/core/slot/slot.component";
 
 export class Binding {
     inputSlot: SlotComponent;

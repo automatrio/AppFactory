@@ -1,18 +1,26 @@
 import { ScrollDispatcher } from '@angular/cdk/scrolling';
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { ExplorerGroupOfPropertiesHostDirective } from 'src/app/common/directives/explorer-group-of-properties-host.directive';
+import { ExplorerService } from 'src/app/core/services/explorer.service';
 
 @Component({
   selector: 'app-explorer',
   templateUrl: './explorer.component.html',
   styleUrls: ['./explorer.component.css']
 })
-export class ExplorerComponent implements OnInit {
+export class ExplorerComponent implements AfterViewInit {
 
-  constructor(private scrollDispatcher: ScrollDispatcher) {
+  @ViewChild(ExplorerGroupOfPropertiesHostDirective, {static: true}) groupOfPropertiesHost!: ExplorerGroupOfPropertiesHostDirective;
+
+  constructor(
+      private scrollDispatcher: ScrollDispatcher,
+      private explorerService: ExplorerService) {
     this.scrollDispatcher.scrolled().subscribe(x => console.log('I am scrolling'));
+    
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    this.explorerService.groupOfPropertiesHost = this.groupOfPropertiesHost.viewContainerRef;
   }
 
 }

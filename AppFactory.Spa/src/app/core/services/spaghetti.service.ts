@@ -1,6 +1,6 @@
 import { Injectable, Renderer2, RendererFactory2 } from '@angular/core';
-import { NodeComponent } from 'src/app/base/node/node.component';
-import { SlotComponent } from 'src/app/base/slot/slot.component';
+import { NodeComponent } from 'src/app/core/node/node.component';
+import { SlotComponent } from 'src/app/core/slot/slot.component';
 import { NodeViewportComponent } from '../node-viewport/node-viewport.component';
 import { CommandService } from 'src/app/core/services/command.service';
 import { PageService } from 'src/app/pages/service/page.service';

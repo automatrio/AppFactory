@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DatabaseService } from './database/service/database.service';
+import { UserInterfaceModule } from '../user-interface/user-interface.module';
 import { DatabaseModule } from './database/database.module';
-import { UserInterfaceModule } from '../user-interface/general.module';
 
 
 

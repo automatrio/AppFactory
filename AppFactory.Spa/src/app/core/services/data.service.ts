@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NodeComponent } from 'src/app/base/node/node.component';
+import { NodeComponent } from 'src/app/core/node/node.component';
 import { INode } from 'src/app/common/interfaces/node';
 
 export type Constructor<T> = new (...args: any[]) => T;

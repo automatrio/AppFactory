@@ -1,4 +1,4 @@
-import { Command } from "src/app/base/command/command";
+import { Command } from "src/app/core/command/command";
 import { DatabaseService } from "../service/database.service";
 
 export class CreateNewDatabaseCommand extends Command {

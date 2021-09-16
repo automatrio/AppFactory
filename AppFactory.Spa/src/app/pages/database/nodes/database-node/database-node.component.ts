@@ -1,11 +1,8 @@
-import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
-import { NodeComponent } from 'src/app/base/node/node.component';
-import { SpaghettiService } from 'src/app/base/spaghetti/spaghetti.service';
+import { Component, OnInit } from '@angular/core';
 import { INode } from 'src/app/common/interfaces/node';
 import { Property } from 'src/app/common/models/property';
 import { DataService } from 'src/app/core/services/data.service';
 import { Colors } from 'src/app/global/colors';
-import { PageService } from 'src/app/pages/service/page.service';
 import { Credentials } from '../../models/credentials';
 import { Database } from '../../models/database';
 import { Environment } from '../../models/environment';

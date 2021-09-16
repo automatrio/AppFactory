@@ -9,8 +9,10 @@ import { ExplorerNavigatorIconComponent } from './explorer/explorer-navigator-ic
 import { ExplorerHeaderComponent } from './explorer/explorer-header/explorer-header.component';
 import { AppRoutingModule } from '../app-routing.module';
 import { CoreModule } from '../core/core.module';
-import { BaseModule } from '../base/base.module';
 import { ExplorerPropertyComponent } from './explorer/explorer-property/explorer-property.component';
+import { ExplorerGroupOfPropertiesComponent } from './explorer/explorer-group-of-properties/explorer-group-of-properties.component';
+import { DirectivesModule } from '../common/directives/directives.module';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,13 +23,15 @@ import { ExplorerPropertyComponent } from './explorer/explorer-property/explorer
     ExplorerHeaderComponent,
     ExplorerNavigatorIconComponent,
     ExplorerPropertyComponent,
+    ExplorerGroupOfPropertiesComponent,
   ],
   imports: [
     CommonModule,
     AngularMaterialModule,
     AppRoutingModule,
-    BaseModule,
-    CoreModule
+    DirectivesModule,
+    CoreModule,
+    FormsModule
   ],
   providers: [
   ],

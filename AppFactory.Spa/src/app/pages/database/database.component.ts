@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { NodeViewportComponent } from 'src/app/base/node-viewport/node-viewport.component';
-import { ToolComponent } from 'src/app/base/tool/tool.component';
+import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
+import { ToolComponent } from 'src/app/core/tool/tool.component';
 import { Colors } from 'src/app/global/colors';
 import { PageService } from '../service/page.service';
 import { DatabaseService } from './service/database.service';

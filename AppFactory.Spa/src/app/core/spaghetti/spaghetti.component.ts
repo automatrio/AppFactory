@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Point } from 'src/app/common/interfaces/point';
 import { SpaghettiData } from 'src/app/common/interfaces/spaghetti-data';
 import { SlotComponent } from '../slot/slot.component';
-import { SVG_PADDING } from './spaghetti.service';
+import { SVG_PADDING } from '../services/spaghetti.service';
 
 @Component({
   selector: 'spaghetti',

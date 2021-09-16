@@ -1,7 +1,7 @@
 import { ComponentFactoryResolver, Injectable, RendererFactory2, Type, ViewContainerRef } from '@angular/core';
-import { Command } from 'src/app/base/command/command';
-import { CreateNodeCommand } from 'src/app/base/command/create-node.command';
-import { CreateSpaghettiCommand } from 'src/app/base/command/create-spaghetti.command';
+import { Command } from 'src/app/core/command/command';
+import { CreateNodeCommand } from 'src/app/core/command/create-node.command';
+import { CreateSpaghettiCommand } from 'src/app/core/command/create-spaghetti.command';
 import { INode } from 'src/app/common/interfaces/node';
 import { PageService } from 'src/app/pages/service/page.service';
 

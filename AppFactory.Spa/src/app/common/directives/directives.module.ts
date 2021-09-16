@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SpaghettiHostDirective } from './spaghetti-host.directive';
 import { NodeHostDirective } from './node-host.directive';
 import { PropertyHostDirective } from './property-host.directive';
+import { ExplorerGroupOfPropertiesHostDirective } from './explorer-group-of-properties-host.directive';
 
 
 
@@ -10,7 +11,8 @@ import { PropertyHostDirective } from './property-host.directive';
   declarations: [
     SpaghettiHostDirective,
     NodeHostDirective,
-    PropertyHostDirective
+    PropertyHostDirective,
+    ExplorerGroupOfPropertiesHostDirective
   ],
   imports: [
     CommonModule
@@ -18,7 +20,8 @@ import { PropertyHostDirective } from './property-host.directive';
   exports: [
     SpaghettiHostDirective,
     NodeHostDirective,
-    PropertyHostDirective
+    PropertyHostDirective,
+    ExplorerGroupOfPropertiesHostDirective
   ]
 })
 export class DirectivesModule { }

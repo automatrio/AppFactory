@@ -1,13 +1,9 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostBinding, OnInit, Type, ViewChild } from "@angular/core";
+import { Component, ElementRef, HostBinding, OnInit, ViewChild } from "@angular/core";
 import { NodeHostDirective } from "src/app/common/directives/node-host.directive";
 import { SpaghettiHostDirective } from "src/app/common/directives/spaghetti-host.directive";
-import { CommandService } from "src/app/core/services/command.service";
 import { Colors } from "src/app/global/colors";
-import { DatabaseService } from "src/app/pages/database/service/database.service";
-import { NodeProperty } from "../node-property/node-property.component";
-import { NodeComponent } from "../node/node.component";
 import { SpaghettiComponent } from "../spaghetti/spaghetti.component";
-import { SpaghettiService } from "../spaghetti/spaghetti.service";
+import { SpaghettiService } from "../services/spaghetti.service";
 
 
 @Component({

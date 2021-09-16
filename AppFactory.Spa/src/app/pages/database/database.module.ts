@@ -5,8 +5,8 @@ import { DatabaseNodeComponent } from './nodes/database-node/database-node.compo
 import { ContextNodeComponent } from './nodes/context-node/context-node.component';
 import { CredentialsNodeComponent } from './nodes/credentials-node/credentials-node.component';
 import { EnvironmentNodeComponent } from './nodes/environment-node/environment-node.component';
-import { BaseModule } from 'src/app/base/base.module';
-import { UserInterfaceModule } from 'src/app/user-interface/general.module';
+import { CoreModule } from 'src/app/core/core.module';
+import { UserInterfaceModule } from 'src/app/user-interface/user-interface.module';
 import { AngularMaterialModule } from 'src/app/common/angular-material.module';
 import { CommonSharedModule } from 'src/app/common/common-shared.module';
 
@@ -22,7 +22,7 @@ import { CommonSharedModule } from 'src/app/common/common-shared.module';
   ],
   imports: [
     CommonModule,
-    BaseModule,
+    CoreModule,
     UserInterfaceModule,
     CommonSharedModule,
     AngularMaterialModule

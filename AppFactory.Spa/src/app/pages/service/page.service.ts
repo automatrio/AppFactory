@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NodeViewportComponent } from 'src/app/base/node-viewport/node-viewport.component';
+import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
 
 @Injectable({
   providedIn: 'root'
