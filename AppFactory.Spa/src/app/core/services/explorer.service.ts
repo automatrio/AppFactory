@@ -1,3 +1,4 @@
+import { CdkScrollable, CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Property } from 'src/app/common/models/property';
@@ -6,6 +7,8 @@ import { ExplorerGroupOfPropertiesComponent } from 'src/app/user-interface/explo
 import { ExplorerNavigatorIconComponent } from 'src/app/user-interface/explorer/explorer-navigator-icon/explorer-navigator-icon.component';
 import { ExplorerPropertyComponent } from 'src/app/user-interface/explorer/explorer-property/explorer-property.component';
 
+export const TOP_MENU_OFFSET = 293;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,21 +16,46 @@ export class ExplorerService {
 
   groupOfPropertiesHost: ViewContainerRef;
   navigatorIconsHosts: ViewContainerRef;
-  groupsDisplayed: { 
+  currentGroupsAndIcons: {
+      groupName: string,
       group: ComponentRef<ExplorerGroupOfPropertiesComponent>,
       icon: ComponentRef<ExplorerNavigatorIconComponent>
     }[] = [];
+  scrollable: CdkScrollable;
+  navigation: HTMLElement;
+
+  private boundary: DOMRect;  
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
   public async explore(node: NodeComponent) {
-
     await this.cleanExistingGroups();
-
     const groups = ExplorerService.assignPropertiesToGroups(node);
-
     this.generateGroups(groups);
-    
+    this.updateNavigationHeight();
+  }
+
+  public navigateToGroup(groupName: string) {
+    const destinationGroup = this.currentGroupsAndIcons.find(item => item.groupName == groupName)!.group;
+    const offset = destinationGroup.instance.elementRef.nativeElement.getBoundingClientRect().top;
+    const currentPosition = this.scrollable.measureScrollOffset("top");
+
+    if(currentPosition == 0) {
+      this.scrollable.scrollTo({top: offset - TOP_MENU_OFFSET, behavior: "smooth"});
+      return;
+    }
+
+    this.scrollable.scrollTo({top: offset - TOP_MENU_OFFSET + currentPosition, behavior: "smooth"});
+  }
+
+  public highlightIcons() {
+    this.currentGroupsAndIcons.forEach(item => {
+      const offset = item.group.instance.elementRef.nativeElement.getBoundingClientRect().top;
+      const distanceToBoundary = Math.abs(offset - (this.boundary.top + 10));
+      const glowAmount = 1 - distanceToBoundary / (this.boundary.height  + 10) * 2;
+      console.log("glowAmount", glowAmount);
+      item.icon.instance.brightness = .25 + glowAmount;
+    });
   }
 
   ////////// PRIVATE METHODS //////////
@@ -42,7 +70,7 @@ export class ExplorerService {
   private async cleanExistingGroups() {
     const endOfAllAnimations: Promise<void>[] = [];
 
-    const endOfAllDestructions = this.groupsDisplayed.map(groupAndIcon => {
+    const endOfAllDestructions = this.currentGroupsAndIcons.map(groupAndIcon => {
       endOfAllAnimations.push(this.waitForIconAnimation(groupAndIcon.icon.instance.animationDone));
       return new Promise<void>(resolve => {
         groupAndIcon.group.destroy();
@@ -54,7 +82,7 @@ export class ExplorerService {
     await Promise.all(endOfAllDestructions);
     await Promise.all(endOfAllAnimations);
 
-    this.groupsDisplayed = [];
+    this.currentGroupsAndIcons = [];
   }
 
   private waitForIconAnimation(animationDone$: BehaviorSubject<boolean>) {
@@ -122,7 +150,7 @@ export class ExplorerService {
       });
       const iconRef = this.generateIcon(groupName);
 
-      this.groupsDisplayed.push({ group: groupRef, icon: iconRef });
+      this.currentGroupsAndIcons.push({ groupName: groupName, group: groupRef, icon: iconRef });
     });
   }
 
@@ -130,5 +158,9 @@ export class ExplorerService {
     const iconRef = this.instantiate(ExplorerNavigatorIconComponent, this.navigatorIconsHosts);
     iconRef.instance.iconType = groupName;
     return iconRef;
+  }
+
+  private updateNavigationHeight() {
+    this.boundary = this.navigation.getBoundingClientRect();
   }
 }

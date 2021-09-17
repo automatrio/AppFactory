@@ -10,7 +10,7 @@ import { CHILD_FADE_IN_AND_OUT } from '../animations/explorer-animations';
             {{headerTitle}}
         </section>
     `,
-    styleUrls: ['../explorer.component.css'],
+    styleUrls: ['../explorer.component.scss'],
     animations: CHILD_FADE_IN_AND_OUT
 })
 export class ExplorerHeaderComponent implements OnInit {
