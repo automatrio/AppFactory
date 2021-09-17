@@ -1,9 +1,10 @@
 import { ComponentFactoryResolver, ComponentRef, Injectable, Type, ViewContainerRef } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Property } from 'src/app/common/models/property';
 import { NodeComponent } from 'src/app/core/node/node.component';
 import { ExplorerGroupOfPropertiesComponent } from 'src/app/user-interface/explorer/explorer-group-of-properties/explorer-group-of-properties.component';
+import { ExplorerNavigatorIconComponent } from 'src/app/user-interface/explorer/explorer-navigator-icon/explorer-navigator-icon.component';
 import { ExplorerPropertyComponent } from 'src/app/user-interface/explorer/explorer-property/explorer-property.component';
-import { ExplorerComponent } from 'src/app/user-interface/explorer/explorer.component';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,17 @@ import { ExplorerComponent } from 'src/app/user-interface/explorer/explorer.comp
 export class ExplorerService {
 
   groupOfPropertiesHost: ViewContainerRef;
-  groupsDisplayed: ComponentRef<ExplorerGroupOfPropertiesComponent>[] = []; 
+  navigatorIconsHosts: ViewContainerRef;
+  groupsDisplayed: { 
+      group: ComponentRef<ExplorerGroupOfPropertiesComponent>,
+      icon: ComponentRef<ExplorerNavigatorIconComponent>
+    }[] = [];
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
-  public explore(node: NodeComponent) {
+  public async explore(node: NodeComponent) {
 
-    this.cleanExistingGroups();
+    await this.cleanExistingGroups();
 
     const groups = ExplorerService.assignPropertiesToGroups(node);
 
@@ -34,11 +39,31 @@ export class ExplorerService {
     return componentRef;
   }
 
-  private cleanExistingGroups() {
-    this.groupsDisplayed.forEach(group => {
-      group.destroy();
+  private async cleanExistingGroups() {
+    const endOfAllAnimations: Promise<void>[] = [];
+
+    const endOfAllDestructions = this.groupsDisplayed.map(groupAndIcon => {
+      endOfAllAnimations.push(this.waitForIconAnimation(groupAndIcon.icon.instance.animationDone));
+      return new Promise<void>(resolve => {
+        groupAndIcon.group.destroy();
+        groupAndIcon.icon.destroy();
+        resolve();
+      });
     });
+
+    await Promise.all(endOfAllDestructions);
+    await Promise.all(endOfAllAnimations);
+
     this.groupsDisplayed = [];
+  }
+
+  private waitForIconAnimation(animationDone$: BehaviorSubject<boolean>) {
+    return new Promise<void>(resolve => {
+      animationDone$.subscribe(done => {
+        if(done)
+          resolve();
+      });
+    })
   }
 
   private static assignPropertiesToGroups(node: NodeComponent) : {[name: string]: any[]} {
@@ -93,10 +118,17 @@ export class ExplorerService {
       groups[groupName].forEach(prop => {
         const propRef = this.instantiate(ExplorerPropertyComponent, propertyHost);
         propRef.instance.property = prop;
-        
+        groupRef.instance.properties.push(propRef.instance);
       });
-      
-      this.groupsDisplayed.push(groupRef);
+      const iconRef = this.generateIcon(groupName);
+
+      this.groupsDisplayed.push({ group: groupRef, icon: iconRef });
     });
+  }
+
+  private generateIcon(groupName: string) : ComponentRef<ExplorerNavigatorIconComponent> {
+    const iconRef = this.instantiate(ExplorerNavigatorIconComponent, this.navigatorIconsHosts);
+    iconRef.instance.iconType = groupName;
+    return iconRef;
   }
 }

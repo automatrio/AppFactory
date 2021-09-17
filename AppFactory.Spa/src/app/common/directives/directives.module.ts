@@ -4,6 +4,7 @@ import { SpaghettiHostDirective } from './spaghetti-host.directive';
 import { NodeHostDirective } from './node-host.directive';
 import { PropertyHostDirective } from './property-host.directive';
 import { ExplorerGroupOfPropertiesHostDirective } from './explorer-group-of-properties-host.directive';
+import { ExplorerNavigatorIconsHostDirective } from './explorer-navigator-icons-host.directive';
 
 
 
@@ -12,7 +13,8 @@ import { ExplorerGroupOfPropertiesHostDirective } from './explorer-group-of-prop
     SpaghettiHostDirective,
     NodeHostDirective,
     PropertyHostDirective,
-    ExplorerGroupOfPropertiesHostDirective
+    ExplorerGroupOfPropertiesHostDirective,
+    ExplorerNavigatorIconsHostDirective
   ],
   imports: [
     CommonModule
@@ -21,7 +23,8 @@ import { ExplorerGroupOfPropertiesHostDirective } from './explorer-group-of-prop
     SpaghettiHostDirective,
     NodeHostDirective,
     PropertyHostDirective,
-    ExplorerGroupOfPropertiesHostDirective
+    ExplorerGroupOfPropertiesHostDirective,
+    ExplorerNavigatorIconsHostDirective
   ]
 })
 export class DirectivesModule { }

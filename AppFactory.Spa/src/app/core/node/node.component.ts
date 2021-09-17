@@ -66,8 +66,8 @@ export class NodeComponent implements OnInit, INode {
     });
   }
 
-  public onExplore() {
-    this.explorerService.explore(this);
+  public async onExplore() {
+    await this.explorerService.explore(this);
   }
 
   ////////// PRIVATE METHODS ///////////

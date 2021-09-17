@@ -2,17 +2,15 @@
 <div class="explorer-inner-outline">
 <div class="explorer-container">
 
-    <div class="explorer-navigator">
-        <div class="icon-cascade">
-            <app-explorer-navigator-icon [iconType]="'cube'"></app-explorer-navigator-icon>
-            <app-explorer-navigator-icon [iconType]="'key'"></app-explorer-navigator-icon>
-            <app-explorer-navigator-icon [iconType]="'globe'"></app-explorer-navigator-icon>
+    <div class="explorer-navigator" >
+        <div class="icon-cascade" [@animationContainer]="explorerService.groupsDisplayed.length">
+            <ng-template explorerNavigatorIconsHost ></ng-template>
         </div>
     </div>
 
-    <div class="explorer explorer-panel" cdkScrollable>
+    <div class="explorer explorer-panel" [@animationContainer]="explorerService.groupsDisplayed.length" cdkScrollable>
 
-        <div explorerGroupOfPropertiesHost></div>
+        <ng-template explorerGroupOfPropertiesHost></ng-template>
 
     </div>
 

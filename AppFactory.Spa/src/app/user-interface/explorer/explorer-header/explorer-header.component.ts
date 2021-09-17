@@ -1,16 +1,17 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HEADERS } from 'src/app/global/headers';
+import { CHILD_FADE_IN_AND_OUT } from '../animations/explorer-animations';
 
 @Component({
     selector: 'app-explorer-header',
     template: `
-        <section class="explorer-header">
+        <section class="explorer-header" @animate>
             <img style="margin-right: 10px" [src]="currentUrl">
             {{headerTitle}}
         </section>
-        <hr>
     `,
-    styleUrls: ['../explorer.component.css']
+    styleUrls: ['../explorer.component.css'],
+    animations: CHILD_FADE_IN_AND_OUT
 })
 export class ExplorerHeaderComponent implements OnInit {
     
