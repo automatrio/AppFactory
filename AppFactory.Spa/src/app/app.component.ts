@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { HostBinding, HostListener, OnInit, Renderer2, RendererFactory2 } from '@angular/core';
 import { Component } from '@angular/core';
 
 @Component({
@@ -9,11 +9,10 @@ import { Component } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'AppFactory';
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit() {
   }
-
-  ////////// PRIVATE METHODS //////////
 
 }

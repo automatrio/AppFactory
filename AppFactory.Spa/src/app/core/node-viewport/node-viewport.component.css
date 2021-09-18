@@ -1,5 +1,7 @@
 .node-viewport-container {
+    position: relative;
     background-color: rgba(17, 17, 17, 0.6);
+    backdrop-filter: grayscale(.95);
     height: 100%;
     width: 100%;
     border: 3px solid rgb(var(--main-dark-blue), .5);
@@ -9,12 +11,22 @@
 
 .viewport-area {
     position: relative;
+    transform: scale(var(--zoom));
+    transform-origin: center;
     padding: 20px;
     width: var(--viewport-width);
     height: var(--viewport-height);
-    backdrop-filter: blur(3px);
+    border: 2px dashed white;
 }
 
 #svg-bloom {
     filter: url(#blurFilter);
+}
+
+.zoom-info {
+    position: absolute;
+    display:flex;
+    align-items: center;
+    left: 300px;
+    bottom: 80px;
 }

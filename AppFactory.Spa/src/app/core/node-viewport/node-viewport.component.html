@@ -1,5 +1,5 @@
-<div class="node-viewport-container" #container>
-    <div class="viewport-area">
+<div class="node-viewport-container" #container cdkScrollable>
+    <div class="viewport-area" #viewportArea>
 
         <ng-template spaghettiHost #spaghettiHost>
         </ng-template>
@@ -7,5 +7,10 @@
         <ng-template nodeHost #nodeHost>
         </ng-template>
 
+
     </div>
+</div>
+
+<div class="zoom-info">
+    <mat-icon>search</mat-icon> {{(zoom * 100).toFixed(0)}}%
 </div>

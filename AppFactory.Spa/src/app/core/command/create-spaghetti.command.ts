@@ -14,6 +14,7 @@ export class CreateSpaghettiCommand extends Command {
     binding: Binding = new Binding();
     nodeViewport: NodeViewportComponent;
     spaghettiRef: ComponentRef<SpaghettiComponent>;
+    scrollOffset: Point;
 
     private _unlistenMouseMove: () => void;
     private _renderer: Renderer2;
@@ -96,11 +97,11 @@ export class CreateSpaghettiCommand extends Command {
     const center = { x: source.x + ~~(length.width / 2), y: source.y + ~~(length.height / 2) };
 
     const points = {
-      origin: { x: source.x, y: source.y },
-      midhigh: { x: center.x, y: source.y },
-      midcenter: { x: center.x, y: center.y },
-      midlow: { x: center.x, y: destination.y },
-      end: { x: destination.x, y: destination.y }
+      origin:     { x: source.x + this.scrollOffset.x,        y: source.y + this.scrollOffset.y      },
+      midhigh:    { x: center.x + this.scrollOffset.x,        y: source.y + this.scrollOffset.y      },
+      midcenter:  { x: center.x + this.scrollOffset.x,        y: center.y + this.scrollOffset.y      },
+      midlow:     { x: center.x + this.scrollOffset.x,        y: destination.y + this.scrollOffset.y },
+      end:        { x: destination.x + this.scrollOffset.x,   y: destination.y + this.scrollOffset.y }
     } as SpaghettiPoints;
 
     return {
