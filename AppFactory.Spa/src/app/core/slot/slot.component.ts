@@ -52,6 +52,14 @@ export class SlotComponent implements OnInit, AfterViewInit {
       event.preventDefault();
       this._activeSlot = this;
       this.slotClicked.emit(this);
+
+      //debug
+
+      const rect = (this.boxContainer.nativeElement as HTMLElement).getBoundingClientRect();
+      const center = { 
+        x: ~~((rect.right - rect.left) / 2 + rect.left), 
+        y: ~~((rect.bottom - rect.top) / 2 + rect.top) }
+      console.log("coordinates", center);
     }
   }
 

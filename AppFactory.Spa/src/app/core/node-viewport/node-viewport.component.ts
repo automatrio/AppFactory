@@ -31,13 +31,14 @@ export class NodeViewportComponent implements AfterViewInit {
   }
 
   colors: Colors;
-  offset: {
-    left: number,
-    top: number
-  };
   dimensions = {
     width: 2000,
     height: 2000
+  };
+
+  private areaOffset: {
+    left: number,
+    top: number
   };
 
   @HostBinding('style.--viewport-width')
@@ -54,7 +55,7 @@ export class NodeViewportComponent implements AfterViewInit {
   @ViewChild(NodeHostDirective, {static: true}) nodeHost!: NodeHostDirective;
   @ViewChild(CdkScrollable, {static: true}) private scrollable!: CdkScrollable;
   @ViewChild('container', {static: true}) private container!: ElementRef<HTMLElement>;
- 
+  @ViewChild('viewportArea', {static: false}) private viewportArea!: ElementRef<HTMLElement>;
 
   constructor(
       private spaghettiService: SpaghettiService,
@@ -65,22 +66,24 @@ export class NodeViewportComponent implements AfterViewInit {
     this.nodeViewportService.zoom$.subscribe(value => {
       this.zoom = value;
     });
+    this.nodeViewportService.pan$.subscribe(() => {
+    });
   }
 
   ngAfterViewInit(): void {
-    this.getBoundingRect();
     this.spaghettiService.scrollable = this.scrollable;
     this.nodeViewportService.scrollable = this.scrollable;
     this.nodeViewportService.viewportContainer = this.container.nativeElement;
   }
 
-  ////////// PRIVATE METHODS //////////
+  public getAreaOffset() {
+    const areaRect = this.viewportArea.nativeElement.getBoundingClientRect();
 
-  private getBoundingRect() {
-    const rect = this.container.nativeElement.getBoundingClientRect();
-    this.offset = {
-      left: Math.round(rect.x) - 5,
-      top: Math.round(rect.y) - 5
+    this.areaOffset = {
+      left: areaRect.left,
+      top:  areaRect.top,
     };
+
+    return this.areaOffset;
   }
 }

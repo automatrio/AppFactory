@@ -1,5 +1,5 @@
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { Point } from 'src/app/common/interfaces/point';
 import { SpaghettiData } from 'src/app/common/interfaces/spaghetti-data';
 import { SlotComponent } from '../slot/slot.component';
@@ -25,7 +25,7 @@ export class SpaghettiComponent implements OnInit {
   @HostBinding("style.--left")
     left: string;
     
-  @Input() binding$: Observable<SpaghettiData>;
+  @Input() binding$: ReplaySubject<SpaghettiData>;
 
   constructor(public elementRef: ElementRef) {}
 

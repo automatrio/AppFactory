@@ -8,6 +8,7 @@ import { CreateSpaghettiCommand } from '../command/create-spaghetti.command';
 import { ReplaySubject } from 'rxjs';
 import { DataBindingService } from 'src/app/core/services/data-binding.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
+import { NodeViewportService } from './node-viewport.service';
 
 export const SVG_PADDING = 10;
 
@@ -48,19 +49,10 @@ export class SpaghettiService {
     prop: any | any[],
     slot: SlotComponent,
   }) {
-    console.log({
-      x: this.scrollable.measureScrollOffset("left"),
-      y: this.scrollable.measureScrollOffset("top")
-    });
-
     this.command = this.commandService.getNewSpaghettiCreationCommand();
     this.command.storeSlot(event.slot);
     this.command.componentHost = this.pageService.viewportRef.spaghettiHost.viewContainerRef;
     this.command.nodeViewport = this.nodeViewport;
-    this.command.scrollOffset = {
-      x: this.scrollable.measureScrollOffset("left"),
-      y: this.scrollable.measureScrollOffset("top")
-    };
     this._unlistenToMouseUp = this._renderer.listen("window", "mouseup", (event) => {this.onMouseUp(event)});
     this.command.Execute();
   }

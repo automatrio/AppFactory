@@ -14,13 +14,11 @@ export class CreateSpaghettiCommand extends Command {
     binding: Binding = new Binding();
     nodeViewport: NodeViewportComponent;
     spaghettiRef: ComponentRef<SpaghettiComponent>;
-    scrollOffset: Point;
 
     private _unlistenMouseMove: () => void;
     private _renderer: Renderer2;
 
-    private _currentDataSource = new ReplaySubject<SpaghettiData>();
-    currentData$ = this._currentDataSource.asObservable();
+    currentData$ = new ReplaySubject<SpaghettiData>();
 
     constructor(
             protected resolver: ComponentFactoryResolver,
@@ -31,10 +29,13 @@ export class CreateSpaghettiCommand extends Command {
 
     public Execute(): void {
 
-        const source = this.getCenter(
-          this.binding.inputSlot?.boxContainer.nativeElement
-          ||
-          this.binding.outputSlot?.boxContainer.nativeElement);
+        const source = 
+        this.getOffset(
+          this.getCenter(
+            this.binding.inputSlot?.boxContainer.nativeElement
+            ||
+            this.binding.outputSlot?.boxContainer.nativeElement)
+        );
 
         this.instantiateSpaghetti();
     
@@ -44,7 +45,7 @@ export class CreateSpaghettiCommand extends Command {
           (event: MouseEvent) => {
             const destination = this.getOffset({ x: event.x, y: event.y } as Point);
     
-            this._currentDataSource
+            this.currentData$
               .next(
                 this.getSpaghettiPoints(source, destination)
               );
@@ -89,6 +90,8 @@ export class CreateSpaghettiCommand extends Command {
 
     private getSpaghettiPoints(source: Point, destination: Point): SpaghettiData {
 
+    const zoomScale = 1 / this.nodeViewport.zoom;
+
     const length = {
       width: destination.x - source.x,
       height: destination.y - source.y
@@ -97,11 +100,11 @@ export class CreateSpaghettiCommand extends Command {
     const center = { x: source.x + ~~(length.width / 2), y: source.y + ~~(length.height / 2) };
 
     const points = {
-      origin:     { x: source.x + this.scrollOffset.x,        y: source.y + this.scrollOffset.y      },
-      midhigh:    { x: center.x + this.scrollOffset.x,        y: source.y + this.scrollOffset.y      },
-      midcenter:  { x: center.x + this.scrollOffset.x,        y: center.y + this.scrollOffset.y      },
-      midlow:     { x: center.x + this.scrollOffset.x,        y: destination.y + this.scrollOffset.y },
-      end:        { x: destination.x + this.scrollOffset.x,   y: destination.y + this.scrollOffset.y }
+      origin:     { x: (source.x)      * zoomScale,        y: (source.y)      * zoomScale },
+      midhigh:    { x: (center.x)      * zoomScale,        y: (source.y)      * zoomScale },
+      midcenter:  { x: (center.x)      * zoomScale,        y: (center.y)      * zoomScale },
+      midlow:     { x: (center.x)      * zoomScale,        y: (destination.y) * zoomScale },
+      end:        { x: (destination.x) * zoomScale,        y: (destination.y) * zoomScale }
     } as SpaghettiPoints;
 
     return {
@@ -115,16 +118,15 @@ export class CreateSpaghettiCommand extends Command {
 
   private getCenter(element: HTMLElement): Point {
     const rect = element.getBoundingClientRect();
-    const offset = this.nodeViewport.offset;
     const center = {
-      x: ~~(rect.left + (rect.right - rect.left) / 2) - offset.left,
-      y: ~~(rect.top + (rect.bottom - rect.top) / 2) - offset.top
+      x: ~~(rect.left + (rect.right - rect.left) / 2),
+      y: ~~(rect.top + (rect.bottom - rect.top) / 2)
     } as Point;
     return center;
   }
 
   private getOffset(point: Point): Point {
-    const offset = this.nodeViewport.offset;
+    const offset = this.nodeViewport.getAreaOffset();
     return {
       x: ~~(point.x - offset.left),
       y: ~~(point.y - offset.top)
