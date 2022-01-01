@@ -4,6 +4,7 @@ import { CreateNodeCommand } from 'src/app/core/command/create-node.command';
 import { CreateSpaghettiCommand } from 'src/app/core/command/create-spaghetti.command';
 import { INode } from 'src/app/common/interfaces/node';
 import { PageService } from 'src/app/pages/service/page.service';
+import { DragNodeCommand } from '../command/drag-node-command';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,12 @@ export class CommandService {
     this.insertCommandIntoList(command);
     return command;
   } 
+
+  public getNewDragNodeCommand() {
+    const command = new DragNodeCommand(this.resolver);
+    this.insertCommandIntoList(command);
+    return command;
+  }
 
   /////////// PRIVATE METHODS //////////
 

@@ -36,8 +36,6 @@ export class NodeViewportService {
       : -ZOOM_INCREMENT;
     const endValue = previousValue + increment;
 
-    console.log("increment", increment);
-
     if(endValue < 0.3 || endValue > 1.6) {
       this.zoom$.next(previousValue);
       return;
@@ -55,8 +53,7 @@ export class NodeViewportService {
       y: this.scrollable.measureScrollOffset("top")
     };
 
-    if(event.button === 1)
-      this.pan$.next({originalCoordinates, originalScroll});
+    this.pan$.next({originalCoordinates, originalScroll});
   }
 
   public releasePan() {

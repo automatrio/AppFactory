@@ -20,8 +20,20 @@ export class NodeViewportComponent implements AfterViewInit {
 
   @HostListener("mousedown", ["$event"])
   onPan(event: MouseEvent) {
-    event.preventDefault();
-    this.nodeViewportService.pan(event);
+    switch (event.button) {
+      case 0:
+        break;
+      case 1:
+        event.preventDefault();
+        this.nodeViewportService.pan(event);
+        break;
+      case 2:
+        event.preventDefault();
+        // introduce right-click menu feature
+        break;
+      default:
+        break;
+    }  
   }
 
   @HostListener("mousewheel", ["$event"])
@@ -31,7 +43,7 @@ export class NodeViewportComponent implements AfterViewInit {
   }
 
   colors: Colors;
-  dimensions = {
+  static dimensions = {
     width: 2000,
     height: 2000
   };
@@ -42,10 +54,10 @@ export class NodeViewportComponent implements AfterViewInit {
   };
 
   @HostBinding('style.--viewport-width')
-    viewportWidth: string = this.dimensions.width + 'px';
+    viewportWidth: string = NodeViewportComponent.dimensions.width + 'px';
 
   @HostBinding('style.--viewport-height')
-    viewportHeight: string = this.dimensions.height + 'px';
+    viewportHeight: string = NodeViewportComponent.dimensions.height + 'px';
 
   @HostBinding('style.--zoom')
     zoom: number;

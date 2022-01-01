@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { ComponentRef, Injectable } from '@angular/core';
 import { NodeComponent } from 'src/app/core/node/node.component';
 import { INode } from 'src/app/common/interfaces/node';
 
@@ -9,14 +9,14 @@ export type Constructor<T> = new (...args: any[]) => T;
 })
 export class DataService {
 
-  nodes: INode[] = [];
+  private nodes: ComponentRef<INode>[] = [];
 
   constructor() { }
 
   public getNodeTitleIndex<T>(node: Constructor<INode>) : string {
     const sameTypeNodes = this.nodes
       .filter(n => {
-        console.log(n?.data.name)
+        console.log(n?.instance.data.name)
         return n instanceof node && n.data.name.slice(-4, -3) == '.'
       });
 
@@ -25,7 +25,7 @@ export class DataService {
     }
 
     const existingTitles = sameTypeNodes
-      .map(n => Number(n.data.name.slice(-3)));
+      .map(n => Number(n.instance.data.name.slice(-3)));
 
     const index = Math.max(...existingTitles) + 1;
 
@@ -40,8 +40,12 @@ export class DataService {
     }
   }
 
-  public appendNewNode(node: INode) {
+  public appendNewNode(node: ComponentRef<INode>) {
     this.nodes.push(node);
+  }
+
+  public getNode(node: INode) : ComponentRef<INode> | undefined {
+    return this.nodes.find(n => n.instance === node);
   }
 
 }

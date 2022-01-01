@@ -22,7 +22,6 @@ export class EnvironmentNodeComponent implements INode, OnInit {
 
   constructor(private dataService: DataService) {
     this.data.name = "Environment" + this.dataService.getNodeTitleIndex(EnvironmentNodeComponent);
-    this.dataService.appendNewNode(this);
   }
 
   ngOnInit(): void {

@@ -31,7 +31,6 @@ export class DatabaseNodeComponent implements INode, OnInit {
 
   constructor(private dataService: DataService) {
     this.data.name = "Database" + this.dataService.getNodeTitleIndex(DatabaseNodeComponent);
-    this.dataService.appendNewNode(this);
   }
 
   ngOnInit(): void {

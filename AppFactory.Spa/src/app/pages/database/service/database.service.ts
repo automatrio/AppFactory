@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CommandService } from 'src/app/core/services/command.service';
+import { DataService } from 'src/app/core/services/data.service';
 import { DatabaseModule } from '../database.module';
 import { CredentialsNodeComponent } from '../nodes/credentials-node/credentials-node.component';
 import { DatabaseNodeComponent } from '../nodes/database-node/database-node.component';
@@ -12,6 +13,7 @@ export class DatabaseService {
 
   constructor(
     private commandService: CommandService,
+    private dataService: DataService
     ) { }
 
     
@@ -20,18 +22,21 @@ export class DatabaseService {
   //   command.Execute();
   // }
 
-  createCredentials() {
+  public createCredentials() {
     const command = this.commandService.getNewNodeCreationCommand(CredentialsNodeComponent);
+    this.dataService.appendNewNode(command.componentRef);
     command.Execute();
   }
 
-  createDatabase() {
+  public createDatabase() {
     const command = this.commandService.getNewNodeCreationCommand(DatabaseNodeComponent);
+    this.dataService.appendNewNode(command.componentRef);
     command.Execute();
   }
 
-  createEnvironment() {
+  public createEnvironment() {
     const command = this.commandService.getNewNodeCreationCommand(EnvironmentNodeComponent);
+    this.dataService.appendNewNode(command.componentRef);
     command.Execute();
   }
 

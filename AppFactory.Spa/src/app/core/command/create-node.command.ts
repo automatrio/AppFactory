@@ -5,7 +5,7 @@ import { Command } from "./command";
 export class CreateNodeCommand< T extends INode > extends Command {
 
 
-    private componentRef: ComponentRef<any>;
+    componentRef: ComponentRef<any>;
 
     component: Type<T>;
 

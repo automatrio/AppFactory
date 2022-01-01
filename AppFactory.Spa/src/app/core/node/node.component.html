@@ -1,6 +1,8 @@
 <div class="box-container"
+    #boxContainer
     cdkDrag 
     cdkDragBoundary=".viewport-area" 
+    (cdkDragStarted)="onDragStarted()"
     (cdkDragMoved)="onDragMoved($event)"
     (dblclick)="onExplore()"
     >

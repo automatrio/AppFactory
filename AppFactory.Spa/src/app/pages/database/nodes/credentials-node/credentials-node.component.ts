@@ -33,7 +33,6 @@ export class CredentialsNodeComponent implements INode, OnInit {
 
   constructor(private dataService: DataService) {
     this.data.name = "Credentials" + this.dataService.getNodeTitleIndex(CredentialsNodeComponent);
-    this.dataService.appendNewNode(this);
   }
 
   ngOnInit(): void {

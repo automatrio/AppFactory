@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, ElementRef, HostBinding, Input, OnInit, ViewChild } from '@angular/core';
 import { NodeViewportComponent } from 'src/app/core/node-viewport/node-viewport.component';
 import { NodeProperty } from '../node-property/node-property.component';
 import { SlotComponent } from '../slot/slot.component';
@@ -8,6 +8,10 @@ import { PageService } from 'src/app/pages/service/page.service';
 import { PropertyHostDirective } from 'src/app/common/directives/property-host.directive';
 import { INode } from 'src/app/common/interfaces/node';
 import { ExplorerService } from 'src/app/core/services/explorer.service';
+import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
+import { CdkDragMove } from '@angular/cdk/drag-drop';
+import { ReplaySubject } from 'rxjs';
+import { Point } from 'src/app/common/interfaces/point';
 
 @Component({
   selector: 'node',
@@ -27,9 +31,13 @@ export class NodeComponent implements OnInit, INode {
   @Input() title: string;
   @Input() properties: Property<any>[];
 
+  drag$ = new ReplaySubject<Point>(1);
+  boundSpaghetti: ComponentRef<SpaghettiComponent>[] = [];
+
   @HostBinding("style.--color")
     @Input() color: string;
 
+  @ViewChild("BoxContainer", {static: true}) private boxContainer: ElementRef<HTMLElement>;
   @ViewChild(SlotComponent, {static: false}) private outputSlot!: SlotComponent | null;
   @ViewChild(PropertyHostDirective, {static: true}) private propertyHost!: PropertyHostDirective;
 
@@ -60,10 +68,24 @@ export class NodeComponent implements OnInit, INode {
     });
   }
 
-  public onDragMoved(event: any){
-    this.properties?.forEach(prop => {
-      // Implement logic to readjust spaghettis
-    });
+  public onDragStarted() {
+    this.boundSpaghetti?.forEach(spaghetti => 
+      spaghetti.instance.beginRelocation(this.drag$.asObservable())
+    );
+  }
+
+  public onDragEnded() {
+    this.boundSpaghetti.forEach(spaghetti => 
+      spaghetti.instance.terminateRelocation()
+    );
+  }
+
+  public onDragMoved(event: CdkDragMove<any>) {
+    const point = {
+      x: event.distance.x,
+      y: event.distance.y
+    } as Point;
+    this.drag$.next(point);
   }
 
   public async onExplore() {
@@ -79,7 +101,6 @@ export class NodeComponent implements OnInit, INode {
       const componentRef = vcRef.createComponent(factory);
       componentRef.instance.property = prop;
       componentRef.instance.parentNode = this;
-
     })
   }
 

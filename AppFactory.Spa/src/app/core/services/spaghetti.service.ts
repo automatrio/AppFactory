@@ -9,6 +9,8 @@ import { ReplaySubject } from 'rxjs';
 import { DataBindingService } from 'src/app/core/services/data-binding.service';
 import { CdkScrollable } from '@angular/cdk/scrolling';
 import { NodeViewportService } from './node-viewport.service';
+import { SpaghettiComponent } from '../spaghetti/spaghetti.component';
+import { Point } from 'src/app/common/interfaces/point';
 
 export const SVG_PADDING = 10;
 
@@ -20,7 +22,7 @@ export class SpaghettiService {
   selectedSlot = new ReplaySubject<SlotComponent | null>(1);
   nodeViewport: NodeViewportComponent;
   scrollable: CdkScrollable;
-  command: CreateSpaghettiCommand;
+  createCommand: CreateSpaghettiCommand;
   amountOfSlots: number = 0;
   collisionCheckIterations: number = 0;
 
@@ -49,22 +51,29 @@ export class SpaghettiService {
     prop: any | any[],
     slot: SlotComponent,
   }) {
-    this.command = this.commandService.getNewSpaghettiCreationCommand();
-    this.command.storeSlot(event.slot);
-    this.command.componentHost = this.pageService.viewportRef.spaghettiHost.viewContainerRef;
-    this.command.nodeViewport = this.nodeViewport;
+    this.createCommand = this.commandService.getNewSpaghettiCreationCommand();
+    this.createCommand.storeSlot(event.slot);
+    this.createCommand.componentHost = this.pageService.viewportRef.spaghettiHost.viewContainerRef;
+    this.createCommand.nodeViewport = this.nodeViewport;
     this._unlistenToMouseUp = this._renderer.listen("window", "mouseup", (event) => {this.onMouseUp(event)});
-    this.command.Execute();
+    this.createCommand.Execute();
   }
 
   public terminateSpaghetti(slot: SlotComponent | null) {
     this._unlistenToMouseUp();
-    const destroy = this.collisionCheckIterations > this.amountOfSlots;
-    const binding = this.command.terminateSpaghetti(slot, destroy);
+    const destroy = this.collisionCheckIterations == this.amountOfSlots - 1;
+    const binding = this.createCommand.terminateSpaghetti(slot, destroy);
 
-    if(binding)
+    console.log("collisionCheckIterations: ", this.collisionCheckIterations, " x AmountOfSlots: ", this.amountOfSlots);
+
+    if(binding) {
       this.dataBindingService.createBinding(binding);
-    
+      
+    }
+    else if(destroy)
+      this.collisionCheckIterations = 0;
+    else
+      this.collisionCheckIterations++;
   }
 
   private onMouseUp(event: MouseEvent) {
